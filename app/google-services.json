@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "256308176745",
+    "firebase_url": "https://tripassistant-3b58c-default-rtdb.firebaseio.com",
+    "project_id": "tripassistant-3b58c",
+    "storage_bucket": "tripassistant-3b58c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:256308176745:android:aedfe58de78304db17bff8",
+        "android_client_info": {
+          "package_name": "com.example.tripassistant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "256308176745-i9htp1mii5mqfk72524freiphjf2vj35.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBA8k1da7xXh2jhhNQ6FjO_KI0baWrfT8c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "256308176745-i9htp1mii5mqfk72524freiphjf2vj35.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
