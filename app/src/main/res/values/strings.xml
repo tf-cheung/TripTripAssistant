@@ -4,4 +4,7 @@
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="don_t_have_an_account_sign_up">Don\'t have an account? Sign up</string>
+    <string name="confirm_password">confirm password</string>
+    <string name="sign_up">sign up</string>
+    <string name="already_have_an_account_login">Already have an account? Login</string>
 </resources>
