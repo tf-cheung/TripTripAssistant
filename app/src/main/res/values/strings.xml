@@ -11,4 +11,6 @@
     <string name="back_button">back button</string>
     <string name="back">back icon</string>
     <string name="sign_out">Sign Out</string>
+    <string name="email_not_available">Email not available</string>
+    <string name="welcome_to_the_app">Welcome to the app!</string>
 </resources>

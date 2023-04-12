@@ -26,8 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private EditText usernameEditText;
     private EditText passwordEditText;
-    private Button loginButton;
-    private Button signUpButton;
+    private EditText loginEmailEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +34,10 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
-
-        usernameEditText = findViewById(R.id.username);
         passwordEditText = findViewById(R.id.password);
-        loginButton = findViewById(R.id.login_button);
-        signUpButton = findViewById(R.id.sign_up_button);
+        Button loginButton = findViewById(R.id.login_button);
+        Button signUpButton = findViewById(R.id.sign_up_button);
+        loginEmailEditText = findViewById(R.id.username);
 
         if (mAuth.getCurrentUser() != null) {
             // User is logged in, navigate to the MainActivity
@@ -87,9 +85,11 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            FirebaseUser user = mAuth.getCurrentUser();
-                            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                            // Sign in success
+                            String userEmail = loginEmailEditText.getText().toString().trim();
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            intent.putExtra("USER_EMAIL", userEmail);
+                            startActivity(intent);
                             finish();
                         } else {
                             // If sign in fails, display a message to the user.

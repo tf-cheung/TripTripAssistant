@@ -8,10 +8,19 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/user_email_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:textSize="16sp" />
+
+    <TextView
         android:id="@+id/welcome_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome to the app!"
+        android:layout_below="@+id/user_email_textview"
+        android:text="@string/welcome_to_the_app"
         android:textSize="24sp" />
 
     <Button
