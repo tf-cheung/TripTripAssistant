@@ -17,6 +17,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.regex.Pattern;
+
 public class SignUpActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
@@ -26,6 +28,11 @@ public class SignUpActivity extends AppCompatActivity {
     private Button signupButton;
     private TextView loginTextView;
     private Button backButton;
+
+    // Password criteria regular expression
+    private static final Pattern PASSWORD_PATTERN = Pattern.compile(
+            "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$"
+    );
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +47,6 @@ public class SignUpActivity extends AppCompatActivity {
         signupButton = findViewById(R.id.signup_button);
         loginTextView = findViewById(R.id.login_text);
         backButton = findViewById(R.id.back_button);
-
 
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,6 +80,11 @@ public class SignUpActivity extends AppCompatActivity {
             return;
         }
 
+        if (!isValidEmail(email)) {
+            signupUsernameEditText.setError("Invalid email address.");
+            return;
+        }
+
         if (TextUtils.isEmpty(password)) {
             signupPasswordEditText.setError("Password is required.");
             return;
@@ -86,6 +97,11 @@ public class SignUpActivity extends AppCompatActivity {
 
         if (!password.equals(confirmPassword)) {
             signupConfirmPasswordEditText.setError("Passwords do not match.");
+            return;
+        }
+
+        if (!isValidPassword(password)) {
+            signupPasswordEditText.setError("Invalid password. Please ensure it meets the criteria.");
             return;
         }
 
@@ -105,4 +121,18 @@ public class SignUpActivity extends AppCompatActivity {
                     }
                 });
     }
+
+    private boolean isValidPassword(String password) {
+        return PASSWORD_PATTERN.matcher(password).matches();
+    }
+
+    private boolean isValidEmail(String email) {
+        if (email == null) {
+            return false;
+        }
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
 }
+
+
+
