@@ -1,10 +1,14 @@
 <resources>
     <string name="app_name">TripAssistant</string>
     <string name="login">Login</string>
-    <string name="username">Username</string>
+    <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="don_t_have_an_account_sign_up">Don\'t have an account? Sign up</string>
     <string name="confirm_password">confirm password</string>
     <string name="sign_up">sign up</string>
     <string name="already_have_an_account_login">Already have an account? Login</string>
+    <string name="password_criteria">At least 8 characters long\nAt least one uppercase letter\nAt least one lowercase letter\nAt least one digit\nAt least one special character (@#$%^&amp;+=)\nNo whitespaces allowed</string>
+    <string name="back_button">back button</string>
+    <string name="back">back icon</string>
+    <string name="sign_out">Sign Out</string>
 </resources>

@@ -2,7 +2,6 @@ package com.example.tripassistant;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.widget.NestedScrollView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -26,21 +25,12 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText signupConfirmPasswordEditText;
     private Button signupButton;
     private TextView loginTextView;
+    private Button backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-
-        final NestedScrollView nestedScrollView = findViewById(R.id.nested_scroll_view);
-
-        nestedScrollView.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                // Scroll to the end of the NestedScrollView
-                nestedScrollView.fullScroll(View.FOCUS_DOWN);
-            }
-        }, 1000); // 1000 milliseconds (1 second) delay
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -49,6 +39,8 @@ public class SignUpActivity extends AppCompatActivity {
         signupConfirmPasswordEditText = findViewById(R.id.signup_confirm_password);
         signupButton = findViewById(R.id.signup_button);
         loginTextView = findViewById(R.id.login_text);
+        backButton = findViewById(R.id.back_button);
+
 
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,6 +53,13 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
+            }
+        });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
             }
         });
     }
@@ -107,4 +106,3 @@ public class SignUpActivity extends AppCompatActivity {
                 });
     }
 }
-
