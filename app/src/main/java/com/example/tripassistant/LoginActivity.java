@@ -41,6 +41,12 @@ public class LoginActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.login_button);
         signUpButton = findViewById(R.id.sign_up_button);
 
+        if (mAuth.getCurrentUser() != null) {
+            // User is logged in, navigate to the MainActivity
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            finish();
+        }
+
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
