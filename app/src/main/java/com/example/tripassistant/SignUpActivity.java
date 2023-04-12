@@ -16,7 +16,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import java.util.regex.Pattern;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -81,7 +82,7 @@ public class SignUpActivity extends AppCompatActivity {
         }
 
         if (!isValidEmail(email)) {
-            signupUsernameEditText.setError("Invalid email address.");
+            signupUsernameEditText.setError("Please provide a valid email address.");
             return;
         }
 
@@ -101,7 +102,7 @@ public class SignUpActivity extends AppCompatActivity {
         }
 
         if (!isValidPassword(password)) {
-            signupPasswordEditText.setError("Invalid password. Please ensure it meets the criteria.");
+            signupPasswordEditText.setError("Password does not meet the criteria.");
             return;
         }
 
@@ -110,7 +111,11 @@ public class SignUpActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign up success, navigate to the main activity
+                            // Sign up success, save the username (email) and navigate to the main activity
+                            String userId = mAuth.getCurrentUser().getUid();
+
+                            saveUsernameToDatabase(userId, email);
+
                             startActivity(new Intent(SignUpActivity.this, MainActivity.class));
                             finish();
                         } else {
@@ -131,6 +136,11 @@ public class SignUpActivity extends AppCompatActivity {
             return false;
         }
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
+
+    private void saveUsernameToDatabase(String userId, String username) {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("usernames");
+        databaseReference.child(userId).setValue(username);
     }
 }
 
