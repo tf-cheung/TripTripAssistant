@@ -3,10 +3,19 @@ package com.example.tripassistant;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.view.Gravity;
+import android.view.WindowManager;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.PopupWindow;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -26,8 +35,6 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText signupUsernameEditText;
     private EditText signupPasswordEditText;
     private EditText signupConfirmPasswordEditText;
-    private Button signupButton;
-    private TextView loginTextView;
     private Button backButton;
 
     // Password criteria regular expression
@@ -42,12 +49,15 @@ public class SignUpActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
 
-        signupUsernameEditText = findViewById(R.id.signup_username);
         signupPasswordEditText = findViewById(R.id.signup_password);
+        signupUsernameEditText = findViewById(R.id.signup_username);
         signupConfirmPasswordEditText = findViewById(R.id.signup_confirm_password);
-        signupButton = findViewById(R.id.signup_button);
-        loginTextView = findViewById(R.id.login_text);
-        backButton = findViewById(R.id.back_button);
+        Button signupButton = findViewById(R.id.signup_button);
+        TextView loginTextView = findViewById(R.id.login_text);
+        ImageButton backButton = findViewById(R.id.back_button);
+
+
+
 
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,7 +79,34 @@ public class SignUpActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
+        signupPasswordEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    showPasswordCriteriaPopup(v);
+                } else {
+                    hidePasswordCriteriaPopup();
+                }
+            }
+        });
+
     }
+    private PopupWindow popupWindow;
+
+    public void showPasswordCriteriaPopup(View view) {
+        FrameLayout popupView = findViewById(R.id.password_criteria_popup);
+
+        popupView.setVisibility(View.VISIBLE);
+    }
+
+
+    public void hidePasswordCriteriaPopup() {
+        FrameLayout popupView = findViewById(R.id.password_criteria_popup);
+
+        popupView.setVisibility(View.GONE);
+    }
+
 
     private void registerUser() {
         String email = signupUsernameEditText.getText().toString().trim();

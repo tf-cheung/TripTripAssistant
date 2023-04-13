@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -22,77 +23,122 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <RelativeLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/car2"
+        app:layout_anchor="@+id/relativeLayout"
+        app:layout_anchorGravity="center" />
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="16dp"
+        app:layout_anchor="@+id/relativeLayout"
+        app:layout_anchorGravity="center"
+        android:weightSum="1">
 
         <EditText
             android:id="@+id/signup_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:hint="@string/email"
             android:inputType="textEmailAddress"
             android:minHeight="48dp"
-            android:layout_marginBottom="16dp" />
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/signup_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:hint="@string/password"
             android:inputType="textPassword"
             android:minHeight="48dp"
-            android:layout_marginBottom="16dp" />
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/signup_confirm_password" />
 
-        <TextView
-            android:layout_width="match_parent"
+        <FrameLayout
+            android:id="@+id/password_criteria_popup"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/password_criteria"
-            android:textColor="@android:color/black"
-            android:textSize="14sp"
-            android:layout_marginBottom="16dp"/>
+            android:background="@color/white"
+            android:padding="8dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@id/signup_password"
+            app:layout_constraintStart_toStartOf="@id/signup_password"
+            app:layout_constraintTop_toBottomOf="@id/signup_password">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/password_criteria"
+                android:textColor="@color/black" />
+
+        </FrameLayout>
 
         <EditText
             android:id="@+id/signup_confirm_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
             android:hint="@string/confirm_password"
             android:inputType="textPassword"
             android:minHeight="48dp"
-            android:layout_marginBottom="16dp" />
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textStyle="bold"/>
 
-        <Button
-            android:id="@+id/signup_button"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/sign_up"
-            android:textColor="@android:color/white"
-            android:background="@android:color/black"
-            android:layout_marginBottom="16dp" />
+            android:orientation="vertical"
+            android:layout_gravity="bottom"
+            android:layout_weight="1">
 
-        <TextView
-            android:id="@+id/login_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/already_have_an_account_login"
-            android:textColor="@android:color/black"
-            android:textSize="14sp" />
+            <Button
+                android:id="@+id/signup_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:background="@color/colorPrimary"
+                android:text="@string/sign_up"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
 
-    </LinearLayout>
-        <Button
+            <TextView
+                android:id="@+id/login_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/already_have_an_account_login"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+
+        <ImageButton
             android:id="@+id/back_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/ic_back"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginBottom="16dp"
-            android:layout_marginStart="16dp" />
+            android:layout_gravity="bottom|start"
+            android:background="?android:attr/selectableItemBackground"
+            android:src="@drawable/left"
+            app:tint="@color/white"
+            android:contentDescription="@string/back_button_description" />
 
-    </RelativeLayout>
+            </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

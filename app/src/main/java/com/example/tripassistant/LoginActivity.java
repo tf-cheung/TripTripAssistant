@@ -7,8 +7,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
+
+
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,14 +20,10 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-
-
-
 public class LoginActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
-    private EditText usernameEditText;
-    private EditText passwordEditText;
     private EditText loginEmailEditText;
+    private EditText passwordEditText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,16 +32,15 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         passwordEditText = findViewById(R.id.password);
+        loginEmailEditText = findViewById(R.id.username);
         Button loginButton = findViewById(R.id.login_button);
         Button signUpButton = findViewById(R.id.sign_up_button);
-        loginEmailEditText = findViewById(R.id.username);
 
         if (mAuth.getCurrentUser() != null) {
             // User is logged in, navigate to the MainActivity
             startActivity(new Intent(LoginActivity.this, MainActivity.class));
             finish();
         }
-
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -67,11 +63,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginUser() {
-        String email = usernameEditText.getText().toString().trim();
+        String email = loginEmailEditText.getText().toString().trim();
         String password = passwordEditText.getText().toString().trim();
 
         if (TextUtils.isEmpty(email)) {
-            usernameEditText.setError("Email is required.");
+            loginEmailEditText.setError("Email is required.");
             return;
         }
 
