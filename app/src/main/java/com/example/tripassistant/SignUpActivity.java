@@ -2,12 +2,20 @@ package com.example.tripassistant;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.widget.NestedScrollView;
+
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.view.Gravity;
+import android.view.WindowManager;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.PopupWindow;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -17,6 +25,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import java.util.regex.Pattern;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -24,31 +35,29 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText signupUsernameEditText;
     private EditText signupPasswordEditText;
     private EditText signupConfirmPasswordEditText;
-    private Button signupButton;
-    private TextView loginTextView;
+    private Button backButton;
+
+    // Password criteria regular expression
+    private static final Pattern PASSWORD_PATTERN = Pattern.compile(
+            "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$"
+    );
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        final NestedScrollView nestedScrollView = findViewById(R.id.nested_scroll_view);
-
-        nestedScrollView.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                // Scroll to the end of the NestedScrollView
-                nestedScrollView.fullScroll(View.FOCUS_DOWN);
-            }
-        }, 1000); // 1000 milliseconds (1 second) delay
-
         mAuth = FirebaseAuth.getInstance();
 
-        signupUsernameEditText = findViewById(R.id.signup_username);
         signupPasswordEditText = findViewById(R.id.signup_password);
+        signupUsernameEditText = findViewById(R.id.signup_username);
         signupConfirmPasswordEditText = findViewById(R.id.signup_confirm_password);
-        signupButton = findViewById(R.id.signup_button);
-        loginTextView = findViewById(R.id.login_text);
+        Button signupButton = findViewById(R.id.signup_button);
+        TextView loginTextView = findViewById(R.id.login_text);
+        ImageButton backButton = findViewById(R.id.back_button);
+
+
+
 
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,7 +72,41 @@ public class SignUpActivity extends AppCompatActivity {
                 startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
             }
         });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
+        signupPasswordEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) {
+                    showPasswordCriteriaPopup(v);
+                } else {
+                    hidePasswordCriteriaPopup();
+                }
+            }
+        });
+
     }
+    private PopupWindow popupWindow;
+
+    public void showPasswordCriteriaPopup(View view) {
+        FrameLayout popupView = findViewById(R.id.password_criteria_popup);
+
+        popupView.setVisibility(View.VISIBLE);
+    }
+
+
+    public void hidePasswordCriteriaPopup() {
+        FrameLayout popupView = findViewById(R.id.password_criteria_popup);
+
+        popupView.setVisibility(View.GONE);
+    }
+
 
     private void registerUser() {
         String email = signupUsernameEditText.getText().toString().trim();
@@ -72,6 +115,11 @@ public class SignUpActivity extends AppCompatActivity {
 
         if (TextUtils.isEmpty(email)) {
             signupUsernameEditText.setError("Email is required.");
+            return;
+        }
+
+        if (!isValidEmail(email)) {
+            signupUsernameEditText.setError("Please provide a valid email address.");
             return;
         }
 
@@ -90,12 +138,21 @@ public class SignUpActivity extends AppCompatActivity {
             return;
         }
 
+        if (!isValidPassword(password)) {
+            signupPasswordEditText.setError("Password does not meet the criteria.");
+            return;
+        }
+
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign up success, navigate to the main activity
+                            // Sign up success, save the username (email) and navigate to the main activity
+                            String userId = mAuth.getCurrentUser().getUid();
+
+                            saveUsernameToDatabase(userId, email);
+
                             startActivity(new Intent(SignUpActivity.this, MainActivity.class));
                             finish();
                         } else {
@@ -106,5 +163,23 @@ public class SignUpActivity extends AppCompatActivity {
                     }
                 });
     }
+
+    private boolean isValidPassword(String password) {
+        return PASSWORD_PATTERN.matcher(password).matches();
+    }
+
+    private boolean isValidEmail(String email) {
+        if (email == null) {
+            return false;
+        }
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
+
+    private void saveUsernameToDatabase(String userId, String username) {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("usernames");
+        databaseReference.child(userId).setValue(username);
+    }
 }
+
+
 
