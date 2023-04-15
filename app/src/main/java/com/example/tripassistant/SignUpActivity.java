@@ -256,38 +256,36 @@ public class SignUpActivity extends AppCompatActivity {
             View popupView = popupWindow.getContentView();
             TextView uppercaseTextView = popupView.findViewById(R.id.password_criteria_uppercase);
             if (uppercaseTextView != null) {
-                uppercaseTextView.setTextColor(hasUppercase ? getResources().getColor(R.color.green) : getResources().getColor(R.color.red));
+                uppercaseTextView.setTextColor(hasUppercase ? ContextCompat.getColor(this, R.color.green) : ContextCompat.getColor(this, R.color.red));
             }
 
             TextView lowercaseTextView = popupView.findViewById(R.id.password_criteria_lowercase);
             if (lowercaseTextView != null) {
-                lowercaseTextView.setTextColor(hasLowercase ? getResources().getColor(R.color.green) : getResources().getColor(R.color.red));
+                lowercaseTextView.setTextColor(hasLowercase ? ContextCompat.getColor(this, R.color.green) : ContextCompat.getColor(this, R.color.red));
             }
 
             TextView numberTextView = popupView.findViewById(R.id.password_criteria_number);
             if (numberTextView != null) {
-                numberTextView.setTextColor(hasNumber ? getResources().getColor(R.color.green) : getResources().getColor(R.color.red));
+                numberTextView.setTextColor(hasNumber ? ContextCompat.getColor(this, R.color.green) : ContextCompat.getColor(this, R.color.red));
             }
 
             TextView specialCharTextView = popupView.findViewById(R.id.password_criteria_special_char);
             if (specialCharTextView != null) {
-                specialCharTextView.setTextColor(hasSpecialChar ? getResources().getColor(R.color.green) : getResources().getColor(R.color.red));
+                specialCharTextView.setTextColor(hasSpecialChar ? ContextCompat.getColor(this, R.color.green) : ContextCompat.getColor(this, R.color.red));
             }
 
             TextView lengthTextView = popupView.findViewById(R.id.password_length_criteria_textview);
             if (lengthTextView != null) {
                 if (password.length() < 8) {
-                    lengthTextView.setTextColor(getResources().getColor(R.color.red));
+                    lengthTextView.setTextColor(ContextCompat.getColor(this, R.color.red));
                 } else {
-                    lengthTextView.setTextColor(getResources().getColor(R.color.green));
+                    lengthTextView.setTextColor(ContextCompat.getColor(this, R.color.green));
                 }
             }
         }
 
         return hasUppercase && hasLowercase && hasNumber && hasSpecialChar && password.length() >= 8;
     }
-
-
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
