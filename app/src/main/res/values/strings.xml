@@ -4,15 +4,19 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="don_t_have_an_account_sign_up">Don\'t have an account? Sign up</string>
-    <string name="confirm_password">confirm password</string>
-    <string name="sign_up">sign up</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="sign_up">Sign up</string>
     <string name="already_have_an_account_login">Already have an account? Login</string>
     <string name="password_criteria">At least 8 characters long\nAt least one uppercase letter\nAt least one lowercase letter\nAt least one digit\nAt least one special character (@#$%^&amp;+=)\nNo whitespaces allowed</string>
-    <string name="back_button">back button</string>
-    <string name="back">back icon</string>
+    <string name="back_button">Back button</string>
+    <string name="back">Back icon</string>
     <string name="sign_out">Sign Out</string>
     <string name="email_not_available">Email not available</string>
     <string name="welcome_to_the_app">Welcome to the app!</string>
     <string name="back_button_description">Back to previous screen</string>
-
+    <string name="password_criteria_uppercase">At least one uppercase letter</string>
+    <string name="password_criteria_lowercase">At least one lowercase letter</string>
+    <string name="password_criteria_number">At least one number</string>
+    <string name="password_criteria_special_char">At least one special character (@#$%^&amp;+=)</string>
+    <string name="password_criteria_length">At least 8 characters long</string>
 </resources>
