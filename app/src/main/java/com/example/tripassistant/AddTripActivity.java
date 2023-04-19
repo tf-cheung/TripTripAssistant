@@ -8,6 +8,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -17,6 +18,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.tripassistant.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.chip.Chip;
@@ -38,13 +40,15 @@ public class AddTripActivity extends AppCompatActivity {
     private ChipGroup memberChipGroup;
     private EditText tripNameInput;
 
-    private String currentUserId = "herman1881";
+    private String currentUserId = "KNALPmRX2VNl7lnBYdhq2gAHXBr1";
     private TextView startDateText;
+    private List<User> users= new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_trip);
+
 
         memberInput = findViewById(R.id.member_input);
         memberChipGroup = findViewById(R.id.member_chip_group);
@@ -59,10 +63,19 @@ public class AddTripActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 List<String> usernames = new ArrayList<>();
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    String username = snapshot.child("username").getValue(String.class);
-                    if(!username.equals(currentUserId)){
-                        usernames.add(username);
+                    String userId = snapshot.getKey();
+                    Log.d("userId",userId);
 
+                    String username = snapshot.child("username").getValue(String.class);
+                    Log.d("userId",username);
+
+                    String email = snapshot.child("email").getValue(String.class);
+                    Log.d("userId",email);
+
+                    if(!userId.equals(currentUserId)){
+                        User user = new User(userId,username,email);
+                        usernames.add(username);
+                        users.add(user);
                     }
                 }
 
@@ -120,7 +133,7 @@ public class AddTripActivity extends AppCompatActivity {
                 List<String> members = new ArrayList<>();
                 for (int i = 0; i < memberChipGroup.getChildCount(); i++) {
                     Chip chip = (Chip) memberChipGroup.getChildAt(i);
-                    members.add(chip.getText().toString());
+                    members.add(getUserIdByUsername(users,chip.getText().toString()));
                 }
                 members.add(currentUserId);
                 String startDate = startDateText.getText().toString();
@@ -151,7 +164,7 @@ public class AddTripActivity extends AppCompatActivity {
 
             DatePickerDialog datePickerDialog = new DatePickerDialog(AddTripActivity.this, (view, selectedYear, selectedMonth, selectedDay) -> {
                 selectedMonth++; // Months are indexed from 0-11, so we need to add 1 to get the correct month
-                String date = selectedDay + "/" + selectedMonth + "/" + selectedYear;
+                String date = String.format("%02d/%02d/%d", selectedDay, selectedMonth, selectedYear);
                 startDateText.setText(date);
                 startDateText.setVisibility(View.GONE);
                 onDateSelected(date);
@@ -172,6 +185,17 @@ public class AddTripActivity extends AppCompatActivity {
         });
 
     }
+
+    public String getUserIdByUsername(List<User> userList, String username) {
+        for (User user : userList) {
+            if (user.getUsername().equals(username)) {
+                return user.getUserId();
+            }
+        }
+        return null; // 如果没有找到匹配的用户，则返回 null
+    }
+
+
     private void onDateSelected(String selectedDate) {
         ChipGroup dateChipGroup = findViewById(R.id.date_chip_group);
 

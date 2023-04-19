@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class DisplayTripActivity extends AppCompatActivity {
 
@@ -36,7 +38,8 @@ public class DisplayTripActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
-    private String currentUserId = "herman1881";
+
+    private String currentUserId = "KNALPmRX2VNl7lnBYdhq2gAHXBr1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,8 @@ public class DisplayTripActivity extends AppCompatActivity {
         tripsList = new ArrayList<>();
         tripAdapter = new TripAdapter(tripsList);
         recyclerView.setAdapter(tripAdapter);
+
+
 
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -72,12 +77,17 @@ public class DisplayTripActivity extends AppCompatActivity {
                 tripsList.clear();
                 for (DataSnapshot tripSnapshot : dataSnapshot.getChildren()) {
                     Trip trip = tripSnapshot.getValue(Trip.class);
+
                     if (trip != null && trip.getMembers().contains(currentUserId)) {
                         tripsList.add(trip);
                     }
                 }
+
+                DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+
                 tripsList = tripsList.stream()
-                        .sorted(Comparator.comparing(Trip::getStartDate))
+                        .sorted(Comparator.comparing(trip -> LocalDate.parse(trip.getStartDate(), dateFormatter)))
                         .collect(Collectors.toList());
                 tripAdapter.setTripsList(tripsList);
                 tripAdapter.notifyDataSetChanged();
