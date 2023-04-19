@@ -25,6 +25,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.tripassistant.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -39,6 +40,7 @@ import java.util.regex.Pattern;
 public class SignUpActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
+    private EditText signupEmailEditText;
     private EditText signupUsernameEditText;
     private EditText signupPasswordEditText;
     private EditText signupConfirmPasswordEditText;
@@ -73,6 +75,7 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
+        signupEmailEditText = findViewById(R.id.signup_email);
         signupUsernameEditText = findViewById(R.id.signup_username);
         signupConfirmPasswordEditText = findViewById(R.id.signup_confirm_password);
         Button signupButton = findViewById(R.id.signup_button);
@@ -152,7 +155,8 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void registerUser() {
-        String email = signupUsernameEditText.getText().toString().trim();
+        String email = signupEmailEditText.getText().toString().trim();
+        String username = signupUsernameEditText.getText().toString().trim();
         String password = signupPasswordEditText.getText().toString().trim();
         String confirmPassword = signupConfirmPasswordEditText.getText().toString().trim();
 
@@ -195,7 +199,7 @@ public class SignUpActivity extends AppCompatActivity {
                             FirebaseUser currentUser = mAuth.getCurrentUser();
                             if (currentUser != null) {
                                 String userId = currentUser.getUid();
-                                saveUsernameToDatabase(userId, email);
+                                saveUserToDatabase(userId, email, username);
                                 startActivity(new Intent(SignUpActivity.this, MainActivity.class));
                                 finish();
                             } else {
@@ -216,9 +220,10 @@ public class SignUpActivity extends AppCompatActivity {
                 });
     }
 
-    private void saveUsernameToDatabase(String userId, String username) {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("usernames");
-        databaseReference.child(userId).setValue(username);
+    private void saveUserToDatabase(String userId, String email, String username) {
+        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
+        User user = new User(email, username);
+        usersRef.child(userId).setValue(user);
     }
 
     private boolean isValidEmail(String email) {

@@ -19,10 +19,6 @@
     <string name="password_criteria_number">At least one number</string>
     <string name="password_criteria_special_char">At least one special character (@#$%^&amp;+=)</string>
     <string name="password_criteria_length">At least 8 characters long</string>
-    <string name="user_profile_picture_description">profile picture</string>
-    <string name="settings">Settings</string>
-    <string name="sidebar_button_description">sidebar button</string>
-    <string name="settings_button_description">settings icon</string>
-    <string name="signout_button_description">sign out button</string>
-    <string name="navigation_drawer_open">side bar</string>
+<<<<<<< master
+    <string name="username">Username</string>
 </resources>
