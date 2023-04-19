@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/light_gray">
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/logo_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/my_logo"
-        android:layout_centerInParent="true"/>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/car1"
+        android:scaleType="centerCrop" />
 
     <LinearLayout
         android:id="@+id/login_layout"
@@ -23,9 +23,12 @@
             android:id="@+id/username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/username"
+            android:hint="@string/email"
             android:inputType="text"
             android:minHeight="48dp"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            android:textStyle="bold"
             android:layout_marginBottom="16dp"/>
 
         <EditText
@@ -35,6 +38,9 @@
             android:hint="@string/password"
             android:inputType="textPassword"
             android:minHeight="48dp"
+            android:textColorHint="@color/white"
+            android:textColor="@color/white"
+            android:textStyle="bold"
             android:layout_marginBottom="16dp"/>
 
     </LinearLayout>
@@ -52,8 +58,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/login"
-            android:textColor="@android:color/white"
-            android:background="@android:color/black"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:background="@color/colorPrimary"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"/>
 
@@ -62,8 +69,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/sign_up"
-            android:textColor="@android:color/white"
-            android:background="@android:color/black"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:background="@color/colorPrimary"
             android:layout_marginBottom="16dp" />
 
     </LinearLayout>
