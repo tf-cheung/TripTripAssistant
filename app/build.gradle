@@ -38,12 +38,10 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     implementation platform('com.google.firebase:firebase-bom:31.3.0')
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.firebase:firebase-auth:21.3.0'
+    implementation 'com.google.firebase:firebase-firestore:24.5.0'
     implementation 'com.google.firebase:firebase-database'
-    implementation 'com.google.android.material:material:1.8.0'
-
-
-    def nav_version = "2.4.2"
-    implementation "androidx.navigation:navigation-fragment:$nav_version"
-    implementation "androidx.navigation:navigation-ui:$nav_version"
+    implementation 'androidx.drawerlayout:drawerlayout:1.2.0'
 
 }

@@ -11,4 +11,6 @@
     <color name="red">#BC1D12</color>
     <color name="colorPrimary" />
     <color name="green">#4CAF50</color>
+    <color name="orange">#FF9800</color>
+    <color name="blue">#2196F3</color>
 </resources>
