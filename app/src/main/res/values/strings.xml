@@ -19,5 +19,6 @@
     <string name="password_criteria_number">At least one number</string>
     <string name="password_criteria_special_char">At least one special character (@#$%^&amp;+=)</string>
     <string name="password_criteria_length">At least 8 characters long</string>
+<<<<<<< master
     <string name="username">Username</string>
 </resources>
