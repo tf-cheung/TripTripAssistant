@@ -10,5 +10,7 @@
     <color name="light_gray">#D3D3D3</color>
     <color name="red">#BC1D12</color>
     <color name="green">#4CAF50</color>
+    <color name="orange">#FF9800</color>
+    <color name="blue">#2196F3</color>
     <color name="colorPrimary">#A802F6</color>/>
 </resources>

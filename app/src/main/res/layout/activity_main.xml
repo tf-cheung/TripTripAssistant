@@ -1,33 +1,135 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_main"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
+    android:layout_gravity="start"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/user_email_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:textSize="16sp" />
+    <RelativeLayout
+        android:id="@+id/activity_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:background="@color/orange">
 
-    <TextView
-        android:id="@+id/welcome_textview"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/user_email_textview"
-        android:text="@string/welcome_to_the_app"
-        android:textSize="24sp" />
+        <ImageButton
+            android:id="@+id/hamburger_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_menu"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:contentDescription="@string/sidebar_button_description" />
+    </RelativeLayout>
 
-    <Button
-        android:id="@+id/signout_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/welcome_textview"
-        android:text="@string/sign_out" />
+    <LinearLayout
+        android:id="@+id/sidebar_layout"
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/blue"
+        android:layout_gravity="start">
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/user_email_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            android:layout_marginStart="16dp"
+            android:textSize="16sp"
+            android:textColor="@android:color/white"
+            android:layout_gravity="center_vertical" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray" />
+
+        <!-- Current Trip -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Current Trip"
+            android:textSize="18sp"
+            android:textColor="@android:color/white" />
+
+        <ListView
+            android:id="@+id/current_trip_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:divider="@android:color/darker_gray"
+            android:dividerHeight="1dp" />
+
+        <!-- Upcoming Trips -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Upcoming Trips"
+            android:textSize="18sp"
+            android:textColor="@android:color/white" />
+
+        <ListView
+            android:id="@+id/upcoming_trips_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:divider="@android:color/darker_gray"
+            android:dividerHeight="1dp" />
+
+        <!-- Past Trips -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="Past Trips"
+            android:textSize="18sp"
+            android:textColor="@android:color/white" />
+
+        <ListView
+            android:id="@+id/past_trips_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:divider="@android:color/darker_gray"
+            android:dividerHeight="1dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="bottom">
+
+            <ImageButton
+                android:id="@+id/settings_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/ic_settings_gear"
+                android:contentDescription="@string/settings_button_description"
+                android:scaleType="fitCenter"
+                android:padding="16dp"
+                android:background="?android:attr/selectableItemBackground" />
+
+            <ImageButton
+                android:id="@+id/signout_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:src="@drawable/ic_logout"
+                android:contentDescription="@string/signout_button_description"
+                android:scaleType="fitCenter"
+                android:padding="16dp"
+                android:background="?android:attr/selectableItemBackground" />
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.drawerlayout.widget.DrawerLayout>
