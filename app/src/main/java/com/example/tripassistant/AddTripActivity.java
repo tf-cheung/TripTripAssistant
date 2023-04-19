@@ -8,6 +8,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -38,7 +39,7 @@ public class AddTripActivity extends AppCompatActivity {
     private EditText tripNameInput;
 
     private String currentUserId = "herman1881";
-
+    private TextView startDateText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +49,7 @@ public class AddTripActivity extends AppCompatActivity {
         memberInput = findViewById(R.id.member_input);
         memberChipGroup = findViewById(R.id.member_chip_group);
         tripNameInput = findViewById(R.id.trip_name_input);
-        TextView startDateText = findViewById(R.id.start_date_text);
+        startDateText = findViewById(R.id.start_date_text);
 
 
         DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
@@ -152,14 +153,13 @@ public class AddTripActivity extends AppCompatActivity {
                 selectedMonth++; // Months are indexed from 0-11, so we need to add 1 to get the correct month
                 String date = selectedDay + "/" + selectedMonth + "/" + selectedYear;
                 startDateText.setText(date);
+                startDateText.setVisibility(View.GONE);
+                onDateSelected(date);
+
             }, year, month, day);
 
             datePickerDialog.show();
         });
-
-
-
-
 
 
         ConstraintLayout mainLayout = findViewById(R.id.add_trip_layout);
@@ -171,8 +171,26 @@ public class AddTripActivity extends AppCompatActivity {
             }
         });
 
+    }
+    private void onDateSelected(String selectedDate) {
+        ChipGroup dateChipGroup = findViewById(R.id.date_chip_group);
 
+        // 创建一个新的 Chip
+        Chip chip = new Chip(this);
+        chip.setText(selectedDate);
+        chip.setCloseIconVisible(true);
+        chip.setCheckable(false);
+        chip.setClickable(false);
 
+        // 为 Chip 设置关闭图标的点击监听器，以便在用户点击关闭图标时删除该 Chip
+        chip.setOnCloseIconClickListener(v -> {
+            dateChipGroup.removeView(chip);
+            startDateText.setText("Select date");
+            startDateText.setVisibility(View.VISIBLE);
+        });
+
+        // 将新创建的 Chip 添加到 ChipGroup 中
+        dateChipGroup.addView(chip);
     }
 
     private void addMemberChip(String memberName) {
