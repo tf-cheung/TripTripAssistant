@@ -78,7 +78,23 @@
         android:text="Create Trip"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/member_input_layout" />
+        app:layout_constraintTop_toBottomOf="@+id/member_input_layout"
+        app:layout_constraintBottom_toTopOf="@id/cancel_button"
+        />
+
+    <TextView
+        android:id="@+id/cancel_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Cancel"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/create_trip_button"
+         />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

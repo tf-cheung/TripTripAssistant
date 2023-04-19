@@ -12,6 +12,9 @@
         android:theme="@style/Theme.TripAssistant"
         tools:targetApi="31">
         <activity
+            android:name=".DisplayTripActivity"
+            android:exported="false" />
+        <activity
             android:name=".ExpenseActivity"
             android:exported="false" />
         <activity

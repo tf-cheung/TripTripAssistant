@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -74,16 +75,30 @@ public class AddTripActivity extends AppCompatActivity {
 
         Button createTripButton = findViewById(R.id.create_trip_button);
         createTripButton.setOnClickListener(v -> {
-            String tripName = tripNameInput.getText().toString();
+            String tripName = tripNameInput.getText().toString().trim();
 
-            List<String> members = new ArrayList<>();
-            for (int i = 0; i < memberChipGroup.getChildCount(); i++) {
-                Chip chip = (Chip) memberChipGroup.getChildAt(i);
-                members.add(chip.getText().toString());
+            if (tripName.isEmpty()) {
+                Toast.makeText(AddTripActivity.this, "Please enter a trip name.", Toast.LENGTH_SHORT).show();
+            } else {
+                tripName = tripNameInput.getText().toString();
+                List<String> members = new ArrayList<>();
+                for (int i = 0; i < memberChipGroup.getChildCount(); i++) {
+                    Chip chip = (Chip) memberChipGroup.getChildAt(i);
+                    members.add(chip.getText().toString());
+                }
+                saveTripToFirebase(tripName, members);
+                Intent intent = new Intent(AddTripActivity.this, DisplayTripActivity.class);
+                startActivity(intent);
             }
 
-            saveTripToFirebase(tripName, members);
         });
+
+        TextView cancelButton = findViewById(R.id.cancel_button);
+        cancelButton.setOnClickListener(v -> {
+            Intent intent = new Intent(AddTripActivity.this, DisplayTripActivity.class);
+            startActivity(intent);
+        });
+
     }
 
     private void addMemberChip(String memberName) {
