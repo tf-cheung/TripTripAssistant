@@ -4,10 +4,6 @@ plugins {
 }
 
 android {
-    signingConfigs {
-        release {
-        }
-    }
     namespace 'com.example.tripassistant'
     compileSdk 33
 
@@ -19,7 +15,6 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        signingConfig signingConfigs.debug
     }
 
     buildTypes {
@@ -44,9 +39,12 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     implementation platform('com.google.firebase:firebase-bom:31.3.0')
     implementation 'com.google.firebase:firebase-analytics'
-    implementation 'com.google.firebase:firebase-auth:21.2.0'
-    implementation 'com.google.firebase:firebase-firestore:24.4.5'
+    implementation 'com.google.firebase:firebase-auth:21.3.0'
+    implementation 'com.google.firebase:firebase-firestore:24.5.0'
     implementation 'com.google.firebase:firebase-database'
+    implementation 'androidx.drawerlayout:drawerlayout:1.2.0'
+    implementation 'com.google.android.libraries.places:places:3.1.0'
+
     implementation 'com.google.android.material:material:1.8.0'
 
 
