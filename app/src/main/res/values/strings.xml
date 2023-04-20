@@ -20,4 +20,13 @@
     <string name="password_criteria_special_char">At least one special character (@#$%^&amp;+=)</string>
     <string name="password_criteria_length">At least 8 characters long</string>
     <string name="username">Username</string>
+    <string name="enter_a_description">Enter a description</string>
+    <string name="_0_00">$0.00</string>
+    <string name="add_expense">Add expense</string>
+    <string name="paid_by">Paid by</string>
+    <string name="you">you</string>
+    <string name="split_by">Split by</string>
+    <string name="equally">equally</string>
+    <string name="who_paid">Who paid?</string>
+    <string name="adjust_split">Adjust split</string>
 </resources>

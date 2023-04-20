@@ -12,8 +12,17 @@
         android:theme="@style/Theme.TripAssistant"
         tools:targetApi="31">
         <activity
-            android:name=".ExpenseActivity"
+            android:name=".SelectPayeeActivity"
             android:exported="false" />
+        <activity
+            android:name=".SelectPayerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AddExpenseActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ExpenseActivity"
+            android:exported="true" />
         <activity
             android:name=".LoginActivity"
             android:exported="true">
