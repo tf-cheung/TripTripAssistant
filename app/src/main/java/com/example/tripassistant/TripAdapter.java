@@ -55,7 +55,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
                 if (position != RecyclerView.NO_POSITION) {
                     Trip trip = trips.get(position);
                     Intent intent = new Intent(itemView.getContext(), TripDetailsActivity.class);
-//                    intent.putExtra("tripId", trip.getTripId());
+                    intent.putExtra("tripId", trip.getTripId());
                     itemView.getContext().startActivity(intent);
                 }
             });

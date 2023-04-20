@@ -26,4 +26,5 @@
     <string name="settings_button_description">settings icon</string>
     <string name="signout_button_description">sign out button</string>
     <string name="navigation_drawer_open">side bar</string>
+    <string name="google_maps_key">AIzaSyCAznj8pCSFwiLuuDyqLIcwSucnEV2K0KM</string>
 </resources>
