@@ -44,7 +44,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore:24.5.0'
     implementation 'com.google.firebase:firebase-database'
     implementation 'androidx.drawerlayout:drawerlayout:1.2.0'
-    implementation 'com.google.android.gms:play-services-places:17.0.0'
+    implementation 'com.google.android.libraries.places:places:3.1.0'
 
 
 }
