@@ -17,6 +17,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.ApiException;
@@ -48,7 +49,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class TripDetailsActivity extends AppCompatActivity implements OnMapReadyCallback {
-    String tripId;
+    String tripId,tripName,startDate;
     private GoogleMap mMap;
     private MapView mapView;
     private PlacesClient placesClient;
@@ -56,6 +57,9 @@ public class TripDetailsActivity extends AppCompatActivity implements OnMapReady
     private DatabaseReference mDatabaseReference;
     private String selectedAddress;
     private RecyclerView stopPointsRecyclerView;
+    private TextView tripNameTextView;
+    private TextView startDateTextView;
+
     private StopPointAdapter stopPointAdapter;
     private List<HashMap<String, Object>> stopPointsList;
 
@@ -65,7 +69,19 @@ public class TripDetailsActivity extends AppCompatActivity implements OnMapReady
         setContentView(R.layout.activity_trip_details);
 
         tripId = getIntent().getStringExtra("tripId");
+        tripName = getIntent().getStringExtra("tripName");
+        startDate = getIntent().getStringExtra("startDate");
+
+        tripNameTextView = findViewById(R.id.trip_name_text_view);
+        startDateTextView = findViewById(R.id.start_date_text_view);
+        stopPointsRecyclerView = findViewById(R.id.stop_points_recycler_view);
         ImageButton addStopPointButton = findViewById(R.id.add_stop_point_button);
+
+
+
+        tripNameTextView.setText(tripName);
+        startDateTextView.setText(startDate);
+
         addStopPointButton.setOnClickListener(v -> {
             showAddStopPointDialog();
         });
@@ -77,12 +93,10 @@ public class TripDetailsActivity extends AppCompatActivity implements OnMapReady
 
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("trips");
 
-        stopPointsRecyclerView = findViewById(R.id.stop_points_recycler_view);
         stopPointsList = new ArrayList<>();
         stopPointAdapter = new StopPointAdapter(this, stopPointsList,tripId);
         stopPointsRecyclerView.setAdapter(stopPointAdapter);
         stopPointsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
         loadStopPoints();
 
     }
@@ -182,6 +196,7 @@ public class TripDetailsActivity extends AppCompatActivity implements OnMapReady
 
         timePickerDialog.show();
     }
+
 
 
     private void loadStopPoints() {mDatabaseReference.child(tripId).child("stopPoints").addValueEventListener(new ValueEventListener() {
