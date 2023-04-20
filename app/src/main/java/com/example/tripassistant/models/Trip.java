@@ -7,14 +7,15 @@ import java.util.Map;
 public class Trip {
     private String tripName;
     private List<String> members;
-
     private String startDate;
 
+    private String tripId;
     public Trip() {
         // Default constructor required for calls to DataSnapshot.getValue(Trip.class)
     }
 
-    public Trip(String tripName, List<String> members,String startDate) {
+    public Trip(String tripId, String tripName, List<String> members,String startDate) {
+        this.tripId=tripId;
         this.tripName = tripName;
         this.members = members;
         this.startDate=startDate;
@@ -42,5 +43,13 @@ public class Trip {
 
     public void setStartDate(String starDate) {
         this.startDate = starDate;
+    }
+
+    public String getTripId() {
+        return tripId;
+    }
+
+    public void setTripId(String tripId) {
+        this.tripId = tripId;
     }
 }

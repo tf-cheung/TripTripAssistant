@@ -20,6 +20,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -34,7 +35,6 @@ public class DisplayTripActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private TripAdapter tripAdapter;
     private List<Trip> tripsList;
-
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
@@ -76,10 +76,17 @@ public class DisplayTripActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 tripsList.clear();
                 for (DataSnapshot tripSnapshot : dataSnapshot.getChildren()) {
-                    Trip trip = tripSnapshot.getValue(Trip.class);
+                    String tripsId = tripSnapshot.getKey();
+                    String tripsName = tripSnapshot.child("tripName").getValue(String.class);
+                    String startDate = tripSnapshot.child("startDate").getValue(String.class);
+                    GenericTypeIndicator<List<String>> genericTypeIndicator = new GenericTypeIndicator<List<String>>() {};
+                    List<String> members = tripSnapshot.child("members").getValue(genericTypeIndicator);
+//                    Trip trip = tripSnapshot.getValue(Trip.class);
+                    Trip trip = new Trip(tripsId,tripsName,members,startDate);
 
                     if (trip != null && trip.getMembers().contains(currentUserId)) {
                         tripsList.add(trip);
+                        Log.d("tripid",trip.getTripId());
                     }
                 }
 
