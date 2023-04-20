@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,6 +14,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,10 +23,12 @@ public class StopPointAdapter extends RecyclerView.Adapter<StopPointAdapter.View
 
     private List<HashMap<String, Object>> stopPoints;
     private Context context;
+    private String tripId;
 
-    public StopPointAdapter(Context context, List<HashMap<String, Object>> stopPoints) {
+    public StopPointAdapter(Context context, List<HashMap<String, Object>> stopPoints, String tripId) {
         this.context = context;
         this.stopPoints = stopPoints;
+        this.tripId = tripId;
     }
 
     @NonNull
@@ -44,6 +49,18 @@ public class StopPointAdapter extends RecyclerView.Adapter<StopPointAdapter.View
         double longitude = (double) stopPoint.get("longitude");
         LatLng latLng = new LatLng(latitude, longitude);
 
+        holder.deleteStopPointButton.setOnClickListener(v -> {
+            // 在此处添加删除逻辑
+            stopPoints.remove(position);
+            notifyItemRemoved(position);
+            notifyItemRangeChanged(position, stopPoints.size());
+
+            // 从数据库中删除相应的停靠点
+            DatabaseReference stopPointRef = FirebaseDatabase.getInstance().getReference("trips")
+                    .child(tripId).child("stopPoints").child(stopPoint.get("stopPointId").toString());
+            stopPointRef.removeValue();
+        });
+
         // Handle the MapView lifecycle events
         holder.mapView.onCreate(null);
         holder.mapView.getMapAsync(googleMap -> {
@@ -59,11 +76,11 @@ public class StopPointAdapter extends RecyclerView.Adapter<StopPointAdapter.View
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-
         TextView stopPointName;
         TextView stopPointDate;
         TextView stopPointTimeRange;
         MapView mapView;
+        ImageButton deleteStopPointButton;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -72,13 +89,17 @@ public class StopPointAdapter extends RecyclerView.Adapter<StopPointAdapter.View
             stopPointDate = itemView.findViewById(R.id.stop_point_date);
             stopPointTimeRange = itemView.findViewById(R.id.stop_point_time_range);
             mapView = itemView.findViewById(R.id.map_view);
+            deleteStopPointButton = itemView.findViewById(R.id.delete_stop_point_button);
         }
     }
+
     @Override
     public void onViewRecycled(@NonNull ViewHolder holder) {
         super.onViewRecycled(holder);
         if(holder.mapView != null) {
-        holder.mapView.onPause();
-    }}
+            holder.mapView.onPause();
+        }
+    }
 }
+
 

@@ -77,22 +77,15 @@ public class TripDetailsActivity extends AppCompatActivity implements OnMapReady
 
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("trips");
 
-
         stopPointsRecyclerView = findViewById(R.id.stop_points_recycler_view);
         stopPointsList = new ArrayList<>();
-        stopPointAdapter = new StopPointAdapter(this, stopPointsList);
+        stopPointAdapter = new StopPointAdapter(this, stopPointsList,tripId);
         stopPointsRecyclerView.setAdapter(stopPointAdapter);
         stopPointsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         loadStopPoints();
 
-
-
-
     }
-
-
-
         @SuppressLint("ClickableViewAccessibility")
     private void showAddStopPointDialog() {
         selectedAddress = "";
@@ -106,8 +99,6 @@ public class TripDetailsActivity extends AppCompatActivity implements OnMapReady
         EditText stopPointTimeRangeInput = view.findViewById(R.id.stop_point_time_range_input);
         mapView = view.findViewById(R.id.map_view);
         Button addStopPointButton = view.findViewById(R.id.add_stop_point_button);
-
-
         stopPointDateInput.setOnTouchListener((v, event) -> {
             if (event.getAction() == MotionEvent.ACTION_DOWN) {
                 showDatePickerDialog(stopPointDateInput);
@@ -198,7 +189,9 @@ public class TripDetailsActivity extends AppCompatActivity implements OnMapReady
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             stopPointsList.clear();
             for (DataSnapshot stopPointSnapshot : dataSnapshot.getChildren()) {
+                String stopPointId = stopPointSnapshot.getKey();
                 HashMap<String, Object> stopPoint = (HashMap<String, Object>) stopPointSnapshot.getValue();
+                stopPoint.put("stopPointId",stopPointId);
                 stopPointsList.add(stopPoint);
             }
             stopPointAdapter.notifyDataSetChanged();
@@ -218,9 +211,9 @@ public class TripDetailsActivity extends AppCompatActivity implements OnMapReady
         mMap = googleMap;
 
         // Add a marker and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 10));
+        LatLng nowhere = new LatLng(0, 0);
+        mMap.addMarker(new MarkerOptions().position(nowhere).title(""));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(nowhere, 10));
     }
 
     @Override
