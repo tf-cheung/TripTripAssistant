@@ -13,4 +13,6 @@
     <color name="green">#4CAF50</color>
     <color name="primary">#171717</color>
     <color name="secondary">#272727</color>
+    <color name="orange">#FF9800</color>
+    <color name="blue">#2196F3</color>
 </resources>
