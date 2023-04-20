@@ -4,10 +4,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class AddExpenseActivity extends AppCompatActivity {
     private ImageButton backBtn;
@@ -25,6 +28,9 @@ public class AddExpenseActivity extends AppCompatActivity {
         selectPayerBtn = findViewById(R.id.payer_button);
         selectPayeeBtn = findViewById(R.id.payee_button);
 
+        ArrayList<String> tripMembers = getIntent().getStringArrayListExtra("tripMembers");
+        Log.d("DEBUG", tripMembers.toString());
+
         backBtn.setOnClickListener(view -> {
             onBackPressed();
         });
@@ -35,11 +41,13 @@ public class AddExpenseActivity extends AppCompatActivity {
 
         selectPayerBtn.setOnClickListener(view -> {
             Intent intent = new Intent(AddExpenseActivity.this, SelectPayerActivity.class);
+            intent.putStringArrayListExtra("tripMembers", tripMembers);
             startActivity(intent);
         });
 
         selectPayeeBtn.setOnClickListener(view -> {
             Intent intent = new Intent(AddExpenseActivity.this, SelectPayeeActivity.class);
+            intent.putStringArrayListExtra("tripMembers", tripMembers);
             startActivity(intent);
         });
     }
