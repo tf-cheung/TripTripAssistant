@@ -2,15 +2,22 @@ package com.example.tripassistant;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.LocationManager;
 import android.os.Bundle;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -37,6 +44,7 @@ public class DisplayTripActivity extends AppCompatActivity {
     private List<Trip> tripsList;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
+    private final int PERMISSION_CODE = 1;
 
 
     private String currentUserId = "KNALPmRX2VNl7lnBYdhq2gAHXBr1";
@@ -45,6 +53,7 @@ public class DisplayTripActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display_trip);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         recyclerView = findViewById(R.id.trip_recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -67,7 +76,28 @@ public class DisplayTripActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
 
+        } else {
+            ActivityCompat.requestPermissions(DisplayTripActivity.this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_CODE);
+        }
+
+    }
+
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == PERMISSION_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "Permission granted..", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Please provide the permissions", Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     private void loadUserTrips() {
