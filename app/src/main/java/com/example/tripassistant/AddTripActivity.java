@@ -141,18 +141,16 @@ public class AddTripActivity extends AppCompatActivity {
                     Toast.makeText(AddTripActivity.this, "Please select a start date.", Toast.LENGTH_SHORT).show();
                 } else {
                     saveTripToFirebase(tripName, members, startDate);
-                    Intent intent = new Intent(AddTripActivity.this, DisplayTripActivity.class);
-                    startActivity(intent);
-                    finish();
+                    onBackPressed();
+
                 }
             }
         });
 
         TextView cancelButton = findViewById(R.id.cancel_button);
         cancelButton.setOnClickListener(v -> {
-            Intent intent = new Intent(AddTripActivity.this, DisplayTripActivity.class);
-            startActivity(intent);
-            finish();
+            onBackPressed();
+
         });
 
 

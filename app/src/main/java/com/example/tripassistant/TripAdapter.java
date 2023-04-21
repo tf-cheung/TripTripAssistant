@@ -56,6 +56,8 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
                     Trip trip = trips.get(position);
                     Intent intent = new Intent(itemView.getContext(), TripDetailsActivity.class);
                     intent.putExtra("tripId", trip.getTripId());
+                    intent.putExtra("tripName", trip.getTripName());
+                    intent.putExtra("startDate", trip.getStartDate());
                     itemView.getContext().startActivity(intent);
                 }
             });

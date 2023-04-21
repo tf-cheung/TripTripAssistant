@@ -3,6 +3,8 @@ package com.example.tripassistant;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -17,8 +19,10 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.tripassistant.models.User;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -48,7 +52,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class TripDetailsActivity extends AppCompatActivity implements OnMapReadyCallback {
-    String tripId;
+    String tripId,tripName,startDate;
     private GoogleMap mMap;
     private MapView mapView;
     private PlacesClient placesClient;
@@ -56,8 +60,17 @@ public class TripDetailsActivity extends AppCompatActivity implements OnMapReady
     private DatabaseReference mDatabaseReference;
     private String selectedAddress;
     private RecyclerView stopPointsRecyclerView;
+    private TextView tripNameTextView;
+    private TextView startDateTextView;
+    private ImageButton membersBtn;
+
     private StopPointAdapter stopPointAdapter;
     private List<HashMap<String, Object>> stopPointsList;
+
+    private RecyclerView membersRecyclerView;
+    private MemberAdapter memberAdapter;
+    private List<User> userList;
+    private DatabaseReference usersReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +78,27 @@ public class TripDetailsActivity extends AppCompatActivity implements OnMapReady
         setContentView(R.layout.activity_trip_details);
 
         tripId = getIntent().getStringExtra("tripId");
+        tripName = getIntent().getStringExtra("tripName");
+        startDate = getIntent().getStringExtra("startDate");
+
+        tripNameTextView = findViewById(R.id.trip_name_text_view);
+        startDateTextView = findViewById(R.id.start_date_text_view);
+        stopPointsRecyclerView = findViewById(R.id.stop_points_recycler_view);
         ImageButton addStopPointButton = findViewById(R.id.add_stop_point_button);
+        membersBtn = findViewById(R.id.members_button);
+        final DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+
+        membersBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.openDrawer(GravityCompat.END);
+            }
+        });
+
+
+        tripNameTextView.setText(tripName);
+        startDateTextView.setText(startDate);
+
         addStopPointButton.setOnClickListener(v -> {
             showAddStopPointDialog();
         });
@@ -75,15 +108,25 @@ public class TripDetailsActivity extends AppCompatActivity implements OnMapReady
         }
         placesClient = Places.createClient(this);
 
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        usersReference = database.getReference("users");
+        membersRecyclerView = findViewById(R.id.members_recycler_view);
+        membersRecyclerView.setHasFixedSize(true);
+        membersRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        userList = new ArrayList<>();
+        memberAdapter = new MemberAdapter(this, userList);
+        membersRecyclerView.setAdapter(memberAdapter);
+
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("trips");
 
-        stopPointsRecyclerView = findViewById(R.id.stop_points_recycler_view);
         stopPointsList = new ArrayList<>();
         stopPointAdapter = new StopPointAdapter(this, stopPointsList,tripId);
         stopPointsRecyclerView.setAdapter(stopPointAdapter);
         stopPointsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
         loadStopPoints();
+        loadMembers();
+
 
     }
         @SuppressLint("ClickableViewAccessibility")
@@ -183,6 +226,38 @@ public class TripDetailsActivity extends AppCompatActivity implements OnMapReady
         timePickerDialog.show();
     }
 
+    private void loadMembers() {
+        mDatabaseReference.child(tripId).child("members").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                userList.clear();
+                for (DataSnapshot memberIdSnapshot : dataSnapshot.getChildren()) {
+                    String memberId = memberIdSnapshot.getValue(String.class);
+                    Log.d("members loading",memberId);
+                    usersReference.child(memberId).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            User user = dataSnapshot.getValue(User.class);
+                            if (user != null) {
+                                userList.add(user);
+                                memberAdapter.notifyDataSetChanged();
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
 
     private void loadStopPoints() {mDatabaseReference.child(tripId).child("stopPoints").addValueEventListener(new ValueEventListener() {
         @Override
@@ -211,7 +286,7 @@ public class TripDetailsActivity extends AppCompatActivity implements OnMapReady
         mMap = googleMap;
 
         // Add a marker and move the camera
-        LatLng nowhere = new LatLng(0, 0);
+        LatLng nowhere = new LatLng(0.1, 0.1);
         mMap.addMarker(new MarkerOptions().position(nowhere).title(""));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(nowhere, 10));
     }
