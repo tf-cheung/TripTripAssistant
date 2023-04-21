@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -62,7 +63,7 @@ public class TripDetailsActivity extends AppCompatActivity implements OnMapReady
     private RecyclerView stopPointsRecyclerView;
     private TextView tripNameTextView;
     private TextView startDateTextView;
-    private ImageButton membersBtn;
+    private ImageButton membersBtn,expenseBtn;
 
     private StopPointAdapter stopPointAdapter;
     private List<HashMap<String, Object>> stopPointsList;
@@ -86,12 +87,22 @@ public class TripDetailsActivity extends AppCompatActivity implements OnMapReady
         stopPointsRecyclerView = findViewById(R.id.stop_points_recycler_view);
         ImageButton addStopPointButton = findViewById(R.id.add_stop_point_button);
         membersBtn = findViewById(R.id.members_button);
+        expenseBtn = findViewById(R.id.expense_button);
         final DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
 
         membersBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 drawerLayout.openDrawer(GravityCompat.END);
+            }
+        });
+
+        expenseBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TripDetailsActivity.this, ExpenseActivity.class);
+                intent.putExtra("tripId",tripId);
+                startActivity(intent);
             }
         });
 
