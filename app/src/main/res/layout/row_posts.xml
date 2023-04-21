@@ -69,12 +69,12 @@
             android:textSize="16sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/descript"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Description"
-            android:textColor="@color/black" />
+<!--        <TextView-->
+<!--            android:id="@+id/descript"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Description"-->
+<!--            android:textColor="@color/black" />-->
 
         <ImageView
             android:id="@+id/pimagetv"
@@ -122,9 +122,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:autoLink="all"
-                android:background="@color/red"
-                android:drawableStart="@drawable/ic_like"
-                android:drawableLeft="@drawable/ic_like"
+                android:backgroundTint="@color/green"
+                app:icon="@drawable/ic_like"
                 android:padding="5dp"
                 android:textColor="@color/white"
                 android:text="Like" />
@@ -135,10 +134,10 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:autoLink="all"
-                android:background="@color/white"
-                android:drawableStart="@drawable/ic_comment"
-                android:drawableLeft="@drawable/ic_comment"
+                app:backgroundTint="@color/red"
+                app:icon="@drawable/ic_comment"
                 android:padding="5dp"
+                android:textColor="@color/white"
                 android:text="COMMENT" />
 
         </LinearLayout>

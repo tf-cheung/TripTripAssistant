@@ -1,4 +1,4 @@
-package com.example.tripassistant;
+package com.example.tripassistant.models;
 
 
 public class ModelPost {

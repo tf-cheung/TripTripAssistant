@@ -23,6 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.tripassistant.models.ModelPost;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -51,7 +52,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         this.modelPosts = modelPosts;
         myuid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         liekeref = FirebaseDatabase.getInstance().getReference().child("Likes");
-        postref = FirebaseDatabase.getInstance().getReference().child("Posts");
+        postref = FirebaseDatabase.getInstance().getReference().child("trips");
     }
 
     List<ModelPost> modelPosts;
@@ -239,7 +240,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
             time = itemView.findViewById(R.id.utimetv);
             more = itemView.findViewById(R.id.morebtn);
             title = itemView.findViewById(R.id.ptitletv);
-            description = itemView.findViewById(R.id.descript);
+//            description = itemView.findViewById(R.id.descript);
             like = itemView.findViewById(R.id.plikeb);
             comments = itemView.findViewById(R.id.pcommentco);
             likebtn = itemView.findViewById(R.id.like);

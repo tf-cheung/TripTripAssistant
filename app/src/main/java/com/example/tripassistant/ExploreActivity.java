@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.tripassistant.models.ModelPost;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -33,7 +34,7 @@ public class ExploreActivity extends AppCompatActivity {
         // Required empty public constructor
     }
 
-    @Override
+//    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this activity
         View view = inflater.inflate(R.layout.activity_explore, container, false);

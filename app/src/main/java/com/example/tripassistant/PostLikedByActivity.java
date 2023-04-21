@@ -8,6 +8,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.tripassistant.models.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,7 +23,7 @@ public class PostLikedByActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     String postId;
-    List<ModelUsers> list;
+    List<User> list;
     AdapterUsers adapterUsers;
     FirebaseAuth firebaseAuth;
 
@@ -68,7 +69,7 @@ public class PostLikedByActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    ModelUsers model = ds.getValue(ModelUsers.class);
+                    User model = ds.getValue(User.class);
                     list.add(model);
                 }
                 adapterUsers = new AdapterUsers(PostLikedByActivity.this, list);

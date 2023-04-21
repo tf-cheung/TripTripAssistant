@@ -44,6 +44,8 @@ public class AddTripActivity extends AppCompatActivity {
     private TextView startDateText;
     private List<User> users= new ArrayList<>();
 
+    String email, uid, dp;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -224,6 +226,7 @@ public class AddTripActivity extends AppCompatActivity {
     }
 
     private void saveTripToFirebase(String tripName, List<String> members,String startDate) {
+        final String timestamp = String.valueOf(System.currentTimeMillis());
         DatabaseReference tripsRef = FirebaseDatabase.getInstance().getReference("trips");
         String tripId = tripsRef.push().getKey();
 
@@ -236,6 +239,13 @@ public class AddTripActivity extends AppCompatActivity {
         tripData.put("tripName", tripName);
         tripData.put("members", members);
         tripData.put("startDate", startDate);
+
+        tripData.put("tripId", tripId);
+//        tripData.put("description", description);
+        tripData.put("ptime", timestamp);
+        tripData.put("plike", 0);
+        tripData.put("pcomments", 0);
+
 
         tripsRef.child(tripId).setValue(tripData)
                 .addOnSuccessListener(aVoid -> Toast.makeText(AddTripActivity.this, "Trip created successfully!", Toast.LENGTH_SHORT).show())
