@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -73,10 +74,18 @@ public class TripDetailsActivity extends AppCompatActivity implements OnMapReady
     private List<User> userList;
     private DatabaseReference usersReference;
 
+    private Dialog progressDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trip_details);
+
+
+        progressDialog = new Dialog(this);
+        progressDialog.setContentView(R.layout.progress_dialog);
+        progressDialog.setCancelable(false);
+        progressDialog.show(); // 显示Dialog
 
         tripId = getIntent().getStringExtra("tripId");
         tripName = getIntent().getStringExtra("tripName");
@@ -281,6 +290,8 @@ public class TripDetailsActivity extends AppCompatActivity implements OnMapReady
                 stopPointsList.add(stopPoint);
             }
             stopPointAdapter.notifyDataSetChanged();
+            progressDialog.dismiss(); // 数据加载完成后关闭Dialog
+
         }
 
         @Override

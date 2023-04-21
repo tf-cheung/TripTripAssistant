@@ -3,6 +3,8 @@ package com.example.tripassistant;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
+import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
@@ -12,6 +14,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,10 +23,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tripassistant.models.Trip;
+import com.example.tripassistant.models.User;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -48,6 +55,7 @@ public class DisplayTripActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
     private final int PERMISSION_CODE = 1;
+    private Dialog progressDialog;
 
 
     private String currentUserId = "KNALPmRX2VNl7lnBYdhq2gAHXBr1";
@@ -78,7 +86,35 @@ public class DisplayTripActivity extends AppCompatActivity {
 //        });
 
 
+        progressDialog = new Dialog(this);
+        progressDialog.setContentView(R.layout.progress_dialog);
+        progressDialog.setCancelable(false);
+        progressDialog.show(); // 显示Dialog
 
+
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        ImageButton menuButton = findViewById(R.id.menu_button);
+
+        menuButton.setOnClickListener(view -> drawerLayout.openDrawer(GravityCompat.START));
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users");
+
+        databaseReference.child(currentUserId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    String username = dataSnapshot.child("username").getValue(String.class);
+                    String email = dataSnapshot.child("email").getValue(String.class);
+                    TextView navUsername = findViewById(R.id.nav_username);
+                    TextView navEmail = findViewById(R.id.nav_email);
+                    navUsername.setText(username);
+                    navEmail.setText(email);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
 
         recyclerView = findViewById(R.id.trip_recycler_view);
         recyclerView.setHasFixedSize(true);
@@ -126,6 +162,7 @@ public class DisplayTripActivity extends AppCompatActivity {
     }
 
     private void loadUserTrips() {
+
         mDatabase.child("trips").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -153,6 +190,8 @@ public class DisplayTripActivity extends AppCompatActivity {
                         .collect(Collectors.toList());
                 tripAdapter.setTripsList(tripsList);
                 tripAdapter.notifyDataSetChanged();
+                progressDialog.dismiss(); // 数据加载完成后关闭Dialog
+
             }
 
             @Override
