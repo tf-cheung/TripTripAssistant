@@ -137,7 +137,4 @@ public class DisplayTripActivity extends AppCompatActivity {
         });
     }
 
-
-
-
 }
