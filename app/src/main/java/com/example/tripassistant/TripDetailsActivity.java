@@ -3,12 +3,16 @@ package com.example.tripassistant;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -20,6 +24,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.tripassistant.models.User;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -59,14 +64,28 @@ public class TripDetailsActivity extends AppCompatActivity implements OnMapReady
     private RecyclerView stopPointsRecyclerView;
     private TextView tripNameTextView;
     private TextView startDateTextView;
+    private ImageButton membersBtn,expenseBtn;
 
     private StopPointAdapter stopPointAdapter;
     private List<HashMap<String, Object>> stopPointsList;
+
+    private RecyclerView membersRecyclerView;
+    private MemberAdapter memberAdapter;
+    private List<User> userList;
+    private DatabaseReference usersReference;
+
+    private Dialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trip_details);
+
+
+        progressDialog = new Dialog(this);
+        progressDialog.setContentView(R.layout.progress_dialog);
+        progressDialog.setCancelable(false);
+        progressDialog.show(); // 显示Dialog
 
         tripId = getIntent().getStringExtra("tripId");
         tripName = getIntent().getStringExtra("tripName");
@@ -76,7 +95,25 @@ public class TripDetailsActivity extends AppCompatActivity implements OnMapReady
         startDateTextView = findViewById(R.id.start_date_text_view);
         stopPointsRecyclerView = findViewById(R.id.stop_points_recycler_view);
         ImageButton addStopPointButton = findViewById(R.id.add_stop_point_button);
+        membersBtn = findViewById(R.id.members_button);
+        expenseBtn = findViewById(R.id.expense_button);
+        final DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
 
+        membersBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawerLayout.openDrawer(GravityCompat.END);
+            }
+        });
+
+        expenseBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(TripDetailsActivity.this, ExpenseActivity.class);
+                intent.putExtra("tripId",tripId);
+                startActivity(intent);
+            }
+        });
 
 
         tripNameTextView.setText(tripName);
@@ -91,6 +128,16 @@ public class TripDetailsActivity extends AppCompatActivity implements OnMapReady
         }
         placesClient = Places.createClient(this);
 
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        usersReference = database.getReference("users");
+        membersRecyclerView = findViewById(R.id.members_recycler_view);
+        membersRecyclerView.setHasFixedSize(true);
+        membersRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        userList = new ArrayList<>();
+        memberAdapter = new MemberAdapter(this, userList);
+        membersRecyclerView.setAdapter(memberAdapter);
+
         mDatabaseReference = FirebaseDatabase.getInstance().getReference("trips");
 
         stopPointsList = new ArrayList<>();
@@ -98,6 +145,8 @@ public class TripDetailsActivity extends AppCompatActivity implements OnMapReady
         stopPointsRecyclerView.setAdapter(stopPointAdapter);
         stopPointsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         loadStopPoints();
+        loadMembers();
+
 
     }
         @SuppressLint("ClickableViewAccessibility")
@@ -197,7 +246,38 @@ public class TripDetailsActivity extends AppCompatActivity implements OnMapReady
         timePickerDialog.show();
     }
 
+    private void loadMembers() {
+        mDatabaseReference.child(tripId).child("members").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                userList.clear();
+                for (DataSnapshot memberIdSnapshot : dataSnapshot.getChildren()) {
+                    String memberId = memberIdSnapshot.getValue(String.class);
+                    Log.d("members loading",memberId);
+                    usersReference.child(memberId).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            User user = dataSnapshot.getValue(User.class);
+                            if (user != null) {
+                                userList.add(user);
+                                memberAdapter.notifyDataSetChanged();
+                            }
+                        }
 
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
 
     private void loadStopPoints() {mDatabaseReference.child(tripId).child("stopPoints").addValueEventListener(new ValueEventListener() {
         @Override
@@ -210,6 +290,8 @@ public class TripDetailsActivity extends AppCompatActivity implements OnMapReady
                 stopPointsList.add(stopPoint);
             }
             stopPointAdapter.notifyDataSetChanged();
+            progressDialog.dismiss(); // 数据加载完成后关闭Dialog
+
         }
 
         @Override
@@ -226,7 +308,7 @@ public class TripDetailsActivity extends AppCompatActivity implements OnMapReady
         mMap = googleMap;
 
         // Add a marker and move the camera
-        LatLng nowhere = new LatLng(0, 0);
+        LatLng nowhere = new LatLng(0.1, 0.1);
         mMap.addMarker(new MarkerOptions().position(nowhere).title(""));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(nowhere, 10));
     }
