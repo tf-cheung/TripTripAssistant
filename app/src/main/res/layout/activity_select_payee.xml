@@ -13,8 +13,8 @@
 
         <ImageButton
             android:id="@+id/back_button"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:scaleType="centerInside"
             android:layout_gravity="center_vertical"
             android:background="?android:attr/selectableItemBackground"
@@ -34,15 +34,47 @@
 
         <Button
             android:id="@+id/okay_button"
-            android:layout_width="42dp"
-            android:layout_height="wrap_content"
-            android:text="√"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:text="@string/tick"
             android:layout_weight="0"/>
 
     </LinearLayout>
 
+    <LinearLayout
+        android:paddingHorizontal="24dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/equal_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:textAllCaps="false"
+            android:text="@string/equally2" />
+
+        <Button
+            android:id="@+id/unequal_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/white"
+            android:textAllCaps="false"
+            android:text="@string/unequally" />
+
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/userRV"
+        android:id="@+id/equalRV"
+        android:paddingHorizontal="6dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/unequalRV"
+        android:visibility="gone"
+        android:paddingHorizontal="6dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

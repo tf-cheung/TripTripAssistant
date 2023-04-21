@@ -13,8 +13,8 @@
 
         <ImageButton
             android:id="@+id/back_button"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:scaleType="centerInside"
             android:layout_gravity="center_vertical"
             android:background="?android:attr/selectableItemBackground"
@@ -35,7 +35,7 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/userRV"
+        android:id="@+id/memberRV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

@@ -37,37 +37,18 @@ public class ExpenseActivity extends AppCompatActivity {
         String tripId = intent.getStringExtra("tripId") == null ? "-NTQdSYhAYbUmzB71vRU" : intent.getStringExtra("tripId");
 
         databaseRef = FirebaseDatabase.getInstance();
-        DatabaseReference usersRef = databaseRef.getReference("users"), tripsRef = databaseRef.getReference("trips");
+        DatabaseReference tripsRef = databaseRef.getReference("trips");
         DatabaseReference tripRef = tripsRef.child(tripId);
         tripRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                // Handle the trip data here
                 Trip trip = dataSnapshot.getValue(Trip.class);
                 if (trip == null) {
                     Toast.makeText(ExpenseActivity.this, "Trip doesn't exist!", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 tripMembers.clear();
-                for (String member : trip.getMembers()) {
-                    DatabaseReference userRef = usersRef.child(member);
-                    userRef.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            User user = dataSnapshot.getValue(User.class);
-                            if (user != null) {
-                                Log.d("DEBUG", user.getUsername());
-                                tripMembers.add(user.getUsername());
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                            Log.e(TAG, "onCancelled", error.toException());
-                        }
-                    });
-                }
-                Log.d("DEBUG", tripMembers.toString());
+                tripMembers.addAll(trip.getMembers());
             }
 
             @Override
