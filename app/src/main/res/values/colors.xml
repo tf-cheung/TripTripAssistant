@@ -13,7 +13,9 @@
     <color name="green">#4FBA7F</color>
     <color name="primary">#171717</color>
     <color name="secondary">#272727</color>
+    <color name="green">#4CAF50</color>
     <color name="orange">#FF9800</color>
     <color name="blue">#2196F3</color>
+    <color name="colorPrimary">#A802F6</color>/>
     <color name="tangerine">#FF5722</color>
 </resources>
