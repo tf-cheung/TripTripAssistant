@@ -2,27 +2,22 @@ package com.example.tripassistant;
 
 import android.content.Context;
 import android.content.Intent;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.tripassistant.models.ChecklistOption;
 import com.example.tripassistant.models.Expense;
-import com.example.tripassistant.models.SharelistOption;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Map;
 
 public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHolder> {
     private final DecimalFormat decimalFormat = new DecimalFormat("#.##");
@@ -38,6 +33,7 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
         this.username = username;
     }
 
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
@@ -56,9 +52,9 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
         }
         float amount = 0;
         if (expense.getPayer().equals(username)) amount += expense.getAmount();
-        for (String memberName : expense.getPayees().keySet()) {
-            if (memberName.equals(username)) {
-                amount -= expense.getPayees().get(memberName);
+        for (Map.Entry<String, Float> entry : expense.getPayees().entrySet()) {
+            if (entry.getKey().equals(username)) {
+                amount -= entry.getValue();
             }
         }
         String formattedValue = decimalFormat.format(Math.abs(amount));

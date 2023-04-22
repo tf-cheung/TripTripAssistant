@@ -17,10 +17,10 @@
         android:textSize="32sp" />
 
     <LinearLayout
-        android:paddingHorizontal="16dp"
-        android:paddingVertical="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="10dp">
 
         <Button
             android:id="@+id/history_button"
@@ -28,47 +28,47 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="12dp"
             android:backgroundTint="@color/green"
-            android:textAllCaps="false"
-            android:text="@string/history" />
+            android:text="@string/history"
+            android:textAllCaps="false" />
 
         <Button
             android:id="@+id/balances_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/green"
             android:backgroundTint="@color/white"
+            android:text="@string/balances"
             android:textAllCaps="false"
-            android:text="@string/balances" />
+            android:textColor="@color/green" />
 
     </LinearLayout>
 
     <TextView
         android:id="@+id/instruction_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:paddingHorizontal="16dp"
         android:paddingVertical="5dp"
-        android:text="@string/take_a_look_at_past_expenses_in_your_trip"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:text="@string/take_a_look_at_past_expenses_in_your_trip" />
 
     <ProgressBar
         android:id="@+id/progress_bar"
-        android:layout_marginTop="120dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:layout_marginTop="120dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/expense_recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.7"/>
+        android:layout_weight="0.7" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/balances_recycler_view"
         android:layout_width="match_parent"
-        android:visibility="gone"
         android:layout_height="0dp"
-        android:layout_weight="0.7"/>
+        android:layout_weight="0.7"
+        android:visibility="gone" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addExpenseFAB"
@@ -76,7 +76,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginVertical="6dp"
-        android:src="@android:drawable/ic_input_add"
-        android:contentDescription="@string/add_new_expense" />
+        android:contentDescription="@string/add_new_expense"
+        android:src="@android:drawable/ic_input_add" />
 
 </LinearLayout>

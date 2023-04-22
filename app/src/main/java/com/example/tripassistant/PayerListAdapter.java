@@ -1,13 +1,12 @@
 package com.example.tripassistant;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,6 +26,7 @@ public class PayerListAdapter extends RecyclerView.Adapter<PayerListAdapter.View
         this.selectedItem = selectedItem;
     }
 
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
@@ -36,21 +36,19 @@ public class PayerListAdapter extends RecyclerView.Adapter<PayerListAdapter.View
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.labelTV.setText(optionList.get(position).getLabel());
-        holder.checkBox.setChecked(selectedItem == position);
-        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    selectedItem = position;
-                    notifyDataSetChanged();
-                } else if (selectedItem == position) {
-                    // uncheck the selected item if the user clicks it again
-                    selectedItem = -1;
-                    notifyDataSetChanged();
-                }
-                activity.onBackPressed();
+        final int pos = position;
+        holder.labelTV.setText(optionList.get(pos).getLabel());
+        holder.checkBox.setChecked(selectedItem == pos);
+        holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                selectedItem = pos;
+                notifyDataSetChanged();
+            } else if (selectedItem == pos) {
+                // uncheck the selected item if the user clicks it again
+                selectedItem = -1;
+                notifyDataSetChanged();
             }
+            activity.onBackPressed();
         });
     }
 

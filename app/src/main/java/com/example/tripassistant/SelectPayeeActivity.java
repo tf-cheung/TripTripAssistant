@@ -1,6 +1,7 @@
 package com.example.tripassistant;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -10,18 +11,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.tripassistant.models.ChecklistOption;
 import com.example.tripassistant.models.SharelistOption;
-
-import org.checkerframework.checker.units.qual.C;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SelectPayeeActivity extends AppCompatActivity {
-    private int selectedTab;
+    private int selectedTab, green, white;
 
     private ArrayList<Integer> isNeeded;
     private ArrayList<String> shares;
@@ -39,9 +37,13 @@ public class SelectPayeeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_select_payee);
 
         ImageButton backBtn = findViewById(R.id.back_button);
-        backBtn.setOnClickListener(view -> {
-            onBackPressed();
-        });
+        equalRV = findViewById(R.id.equalRV);
+        unequalRV = findViewById(R.id.unequalRV);
+        equalBtn = findViewById(R.id.equal_button);
+        unequalBtn = findViewById(R.id.unequal_button);
+        equalTV = findViewById(R.id.equal_text_view);
+        unequalTV = findViewById(R.id.unequal_text_view);
+        Button okayBtn = findViewById(R.id.okay_button);
 
         Intent intent = getIntent();
         List<String> tripMembers = intent.getStringArrayListExtra("tripMembers");
@@ -49,7 +51,11 @@ public class SelectPayeeActivity extends AppCompatActivity {
         isNeeded = intent.getIntegerArrayListExtra("isNeeded");
         shares = intent.getStringArrayListExtra("shares");
 
-        equalRV = findViewById(R.id.equalRV);
+        green = ContextCompat.getColor(this, R.color.green);
+        white = ContextCompat.getColor(this, R.color.white);
+
+        backBtn.setOnClickListener(view -> onBackPressed());
+
         equalRV.setLayoutManager(new LinearLayoutManager(this));
         optionList = new ArrayList<>();
         for (int i = 0; i < tripMembers.size(); i++) {
@@ -58,7 +64,6 @@ public class SelectPayeeActivity extends AppCompatActivity {
         PayeeListAdapter adapter = new PayeeListAdapter(optionList);
         equalRV.setAdapter(adapter);
 
-        unequalRV = findViewById(R.id.unequalRV);
         unequalRV.setLayoutManager(new LinearLayoutManager(this));
         shareList = new ArrayList<>();
         for (int i = 0; i < tripMembers.size(); i++) {
@@ -66,11 +71,6 @@ public class SelectPayeeActivity extends AppCompatActivity {
         }
         ShareListAdapter adapter2 = new ShareListAdapter(shareList);
         unequalRV.setAdapter(adapter2);
-
-        equalBtn = findViewById(R.id.equal_button);
-        unequalBtn = findViewById(R.id.unequal_button);
-        equalTV = findViewById(R.id.equal_text_view);
-        unequalTV = findViewById(R.id.unequal_text_view);
 
         if (selectedTab == 1) {
             selectUnequal();
@@ -90,10 +90,7 @@ public class SelectPayeeActivity extends AppCompatActivity {
             }
         });
 
-        Button okayBtn = findViewById(R.id.okay_button);
-        okayBtn.setOnClickListener(view -> {
-            onBackPressed();
-        });
+        okayBtn.setOnClickListener(view -> onBackPressed());
     }
 
     @Override
@@ -111,10 +108,10 @@ public class SelectPayeeActivity extends AppCompatActivity {
     }
 
     private void selectEqual() {
-        equalBtn.setBackgroundColor(getResources().getColor(R.color.green));
-        equalBtn.setTextColor(getResources().getColor(R.color.white));
-        unequalBtn.setBackgroundColor(getResources().getColor(R.color.white));
-        unequalBtn.setTextColor(getResources().getColor(R.color.green));
+        equalBtn.setBackgroundColor(green);
+        equalBtn.setTextColor(white);
+        unequalBtn.setBackgroundColor(white);
+        unequalBtn.setTextColor(green);
         equalRV.setVisibility(View.VISIBLE);
         unequalRV.setVisibility(View.GONE);
         equalTV.setVisibility(View.VISIBLE);
@@ -122,10 +119,10 @@ public class SelectPayeeActivity extends AppCompatActivity {
     }
 
     private void selectUnequal() {
-        unequalBtn.setBackgroundColor(getResources().getColor(R.color.green));
-        unequalBtn.setTextColor(getResources().getColor(R.color.white));
-        equalBtn.setBackgroundColor(getResources().getColor(R.color.white));
-        equalBtn.setTextColor(getResources().getColor(R.color.green));
+        unequalBtn.setBackgroundColor(green);
+        unequalBtn.setTextColor(white);
+        equalBtn.setBackgroundColor(white);
+        equalBtn.setTextColor(green);
         unequalRV.setVisibility(View.VISIBLE);
         equalRV.setVisibility(View.GONE);
         unequalTV.setVisibility(View.VISIBLE);

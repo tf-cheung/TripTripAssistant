@@ -1,44 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="12dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingHorizontal="12dp">
 
         <ImageButton
             android:id="@+id/back_button"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:scaleType="centerInside"
             android:layout_gravity="center_vertical"
             android:background="?android:attr/selectableItemBackground"
+            android:contentDescription="@string/back_button_description"
+            android:scaleType="centerInside"
             android:src="@drawable/ic_back"
-            app:tint="@color/black"
-            android:contentDescription="@string/back_button_description" />
+            app:tint="@color/black" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/add_expense"
             android:layout_gravity="center_vertical"
-            android:textSize="24sp"
-            android:textColor="@color/secondary"
+            android:layout_weight="1"
             android:paddingHorizontal="12dp"
-            android:layout_weight="1"/>
+            android:text="@string/add_expense"
+            android:textColor="@color/secondary"
+            android:textSize="24sp" />
 
         <Button
             android:id="@+id/okay_button"
             android:layout_width="42dp"
             android:layout_height="wrap_content"
+            android:layout_weight="0"
             android:backgroundTint="@color/green"
-            android:text="@string/tick"
-            android:layout_weight="0"/>
+            android:text="@string/tick" />
 
     </LinearLayout>
 
@@ -52,15 +52,18 @@
             android:layout_width="42dp"
             android:layout_height="42dp"
             android:background="@drawable/edit_border"
+            android:contentDescription="@string/description_icon"
             android:src="@drawable/baseline_edit_note_24"
             app:tint="@color/secondary" />
 
         <EditText
             android:id="@+id/editTextDescription"
-            android:layout_marginStart="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/enter_a_description" />
+            android:layout_marginStart="5dp"
+            android:autofillHints="Expense description"
+            android:hint="@string/enter_a_description"
+            android:inputType="text" />
 
     </LinearLayout>
 
@@ -74,14 +77,16 @@
             android:layout_width="42dp"
             android:layout_height="42dp"
             android:background="@drawable/edit_border"
+            android:contentDescription="@string/dollar_icon"
             android:src="@drawable/baseline_attach_money_24"
             app:tint="@color/secondary" />
 
         <EditText
             android:id="@+id/editTextAmount"
-            android:layout_marginStart="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:autofillHints="Expense amount"
             android:hint="@string/_0_0"
             android:inputType="numberDecimal" />
 
@@ -95,18 +100,18 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/secondary"
             android:layout_marginEnd="12dp"
-            android:text="@string/paid_by" />
+            android:text="@string/paid_by"
+            android:textColor="@color/secondary" />
 
         <Button
             android:id="@+id/payer_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/secondary"
             android:backgroundTint="@color/white"
             android:text="@string/you"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:textColor="@color/secondary" />
 
     </LinearLayout>
 
@@ -118,18 +123,18 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/secondary"
             android:layout_marginEnd="12dp"
-            android:text="@string/split_by" />
+            android:text="@string/split_by"
+            android:textColor="@color/secondary" />
 
         <Button
             android:id="@+id/payee_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/secondary"
             android:backgroundTint="@color/white"
             android:text="@string/equally"
-            android:textAllCaps="false" />
+            android:textAllCaps="false"
+            android:textColor="@color/secondary" />
 
     </LinearLayout>
 

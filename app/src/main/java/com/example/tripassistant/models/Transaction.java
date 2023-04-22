@@ -5,7 +5,7 @@ import androidx.annotation.NonNull;
 import java.text.DecimalFormat;
 
 public class Transaction {
-    private DecimalFormat df = new DecimalFormat("#.##");
+    private final DecimalFormat df = new DecimalFormat("#.##");
     private final String payer, payee;
     private final float amount;
 

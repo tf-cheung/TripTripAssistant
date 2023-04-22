@@ -4,27 +4,18 @@ import static android.content.ContentValues.TAG;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.tripassistant.models.ChecklistOption;
 import com.example.tripassistant.models.Expense;
-import com.example.tripassistant.models.SharelistOption;
 import com.example.tripassistant.models.Transaction;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -34,7 +25,6 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -70,13 +60,9 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         holder.amountTV.setText(context.getResources().getString(R.string.us_money, df.format(transaction.getAmount())));
         holder.payeeTV.setText(context.getResources().getString(R.string.payer_owes, transaction.getPayee()));
 
-        holder.remindBtn.setOnClickListener(view -> {
-            sendReminder();
-        });
+        holder.remindBtn.setOnClickListener(view -> sendReminder());
 
-        holder.settleUpBtn.setOnClickListener(view -> {
-            settleUp(position);
-        });
+        holder.settleUpBtn.setOnClickListener(view -> settleUp(position));
     }
 
     @Override
@@ -117,7 +103,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
                         Intent intent = new Intent(Intent.ACTION_SEND);
                         intent.setType("text/plain");
-                        intent.putExtra(Intent.EXTRA_EMAIL, new String[] { userEmail });
+                        intent.putExtra(Intent.EXTRA_EMAIL, new String[]{userEmail});
                         intent.putExtra(Intent.EXTRA_SUBJECT, subject);
                         intent.putExtra(Intent.EXTRA_TEXT, body);
 

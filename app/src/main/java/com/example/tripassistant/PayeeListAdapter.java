@@ -4,9 +4,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tripassistant.models.ChecklistOption;
@@ -21,6 +21,7 @@ public class PayeeListAdapter extends RecyclerView.Adapter<PayeeListAdapter.View
         this.optionList = optionList;
     }
 
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
@@ -30,14 +31,10 @@ public class PayeeListAdapter extends RecyclerView.Adapter<PayeeListAdapter.View
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.labelTV.setText(optionList.get(position).getLabel());
-        holder.checkBox.setChecked(optionList.get(position).isChecked());
-        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                optionList.get(position).setChecked(isChecked);
-            }
-        });
+        ChecklistOption option = optionList.get(position);
+        holder.labelTV.setText(option.getLabel());
+        holder.checkBox.setChecked(option.isChecked());
+        holder.checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> option.setChecked(isChecked));
     }
 
     @Override
