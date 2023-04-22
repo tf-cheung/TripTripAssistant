@@ -24,6 +24,7 @@
             android:id="@+id/description_text_view"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_marginStart="12dp"
             android:layout_weight="1"
             android:text="@string/dinner"
@@ -34,6 +35,7 @@
             android:id="@+id/amount_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:text="@string/not_involved"
             android:textSize="14sp" />
 
