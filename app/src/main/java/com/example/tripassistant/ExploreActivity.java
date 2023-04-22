@@ -51,7 +51,7 @@ public class ExploreActivity extends AppCompatActivity {
     }
 
     private void loadPosts() {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Posts");
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("trips");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -73,7 +73,7 @@ public class ExploreActivity extends AppCompatActivity {
     }
     // Search post code
     private void searchPosts(final String search) {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Posts");
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("trips");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -100,5 +100,6 @@ public class ExploreActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_explore);
+
     }
 }
