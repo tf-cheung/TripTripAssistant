@@ -97,6 +97,7 @@ public class ExpenseActivity extends AppCompatActivity {
         addExpenseFAB.setOnClickListener(view -> {
             Intent newIntent = new Intent(ExpenseActivity.this, AddExpenseActivity.class);
             newIntent.putExtra("tripId", tripId);
+            newIntent.putExtra("username", username);
             newIntent.putStringArrayListExtra("tripMembers", tripMembers);
             startActivity(newIntent);
         });

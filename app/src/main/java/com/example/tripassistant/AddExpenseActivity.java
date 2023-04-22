@@ -36,7 +36,7 @@ public class AddExpenseActivity extends AppCompatActivity {
     private static final int SELECT_PAYEE_REQUEST_CODE = 200;
     private Button selectPayerBtn, selectPayeeBtn;
     private EditText descriptionEDT, amountEDT;
-    private String username = "Jade", description, tripId;
+    private String username, description, tripId;
 
     private final ArrayList<String> memberNames = new ArrayList<>();
     private ArrayList<Integer> isNeeded = new ArrayList<>();
@@ -57,6 +57,7 @@ public class AddExpenseActivity extends AppCompatActivity {
 
         Intent currIntent = getIntent();
         tripId = currIntent.getStringExtra("tripId");
+        username = currIntent.getStringExtra("username");
         ArrayList<String> memberIds = currIntent.getStringArrayListExtra("tripMembers");
 
         for (int i = 0; i < memberIds.size(); i++) {
