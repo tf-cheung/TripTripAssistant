@@ -21,11 +21,21 @@
             android:textColor="@android:color/black"
             android:textSize="18sp" />
 
-        <CheckBox
-            android:id="@+id/checkBox"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/us"
+            android:textColor="@color/primary"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/edit_text"
+            android:layout_width="80sp"
+            android:layout_height="wrap_content"
+            android:autofillHints="share amount"
             android:buttonTint="@color/colorPrimary"
+            android:hint="@string/_0_0"
+            android:inputType="numberDecimal"
             android:padding="16dp"
             android:textSize="18sp" />
 

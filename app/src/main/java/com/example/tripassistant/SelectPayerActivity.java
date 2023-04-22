@@ -40,7 +40,7 @@ public class SelectPayerActivity extends AppCompatActivity {
 
         RecyclerView memberRV = findViewById(R.id.memberRV);
         memberRV.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new PayerListAdapter(optionList, selectedItem);
+        adapter = new PayerListAdapter(this, optionList, selectedItem);
         memberRV.setAdapter(adapter);
     }
 

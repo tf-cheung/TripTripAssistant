@@ -1,5 +1,6 @@
 package com.example.tripassistant;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,6 +8,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tripassistant.models.ChecklistOption;
@@ -14,11 +16,13 @@ import com.example.tripassistant.models.ChecklistOption;
 import java.util.List;
 
 public class PayerListAdapter extends RecyclerView.Adapter<PayerListAdapter.ViewHolder> {
+    private final AppCompatActivity activity;
 
     private final List<ChecklistOption> optionList;
     private int selectedItem;
 
-    public PayerListAdapter(List<ChecklistOption> optionList, int selectedItem) {
+    public PayerListAdapter(AppCompatActivity activity, List<ChecklistOption> optionList, int selectedItem) {
+        this.activity = activity;
         this.optionList = optionList;
         this.selectedItem = selectedItem;
     }
@@ -45,6 +49,7 @@ public class PayerListAdapter extends RecyclerView.Adapter<PayerListAdapter.View
                     selectedItem = -1;
                     notifyDataSetChanged();
                 }
+                activity.onBackPressed();
             }
         });
     }

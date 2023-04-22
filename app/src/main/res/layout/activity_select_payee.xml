@@ -34,8 +34,9 @@
 
         <Button
             android:id="@+id/okay_button"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="42dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/green"
             android:text="@string/tick"
             android:layout_weight="0"/>
 
@@ -51,6 +52,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="12dp"
+            android:backgroundTint="@color/green"
             android:textAllCaps="false"
             android:text="@string/equally2" />
 
@@ -58,12 +60,31 @@
             android:id="@+id/unequal_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
+            android:textColor="@color/green"
             android:backgroundTint="@color/white"
             android:textAllCaps="false"
             android:text="@string/unequally" />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/equal_text_view"
+        android:layout_width="match_parent"
+        android:paddingHorizontal="24dp"
+        android:paddingVertical="12dp"
+        android:textSize="15sp"
+        android:layout_height="wrap_content"
+        android:text="@string/select_equally" />
+
+    <TextView
+        android:id="@+id/unequal_text_view"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:paddingHorizontal="24dp"
+        android:paddingVertical="12dp"
+        android:textSize="15sp"
+        android:layout_height="wrap_content"
+        android:text="@string/specify_exactly_how_much_each_person_owes" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/equalRV"
