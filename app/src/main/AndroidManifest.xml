@@ -37,10 +37,7 @@
             android:name=".AddTripActivity"
             android:exported="false" />
 
-        <activity android:name=".LoginActivity"
-            android:exported="false"/>
-
-        <activity android:name=".DisplayTripActivity"
+        <activity android:name=".ExploreActivity"
             android:exported="false"/>
 
         <activity android:name=".PostLikedByActivity"
@@ -64,8 +61,7 @@
         <activity
             android:name=".DisplayTripActivity"
             android:exported="true">
-            android:name=".ExploreActivity"
-            android:exported="true" >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

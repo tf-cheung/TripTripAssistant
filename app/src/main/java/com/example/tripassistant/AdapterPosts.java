@@ -1,6 +1,7 @@
 package com.example.tripassistant;
 
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -65,7 +66,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final MyHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final MyHolder holder, @SuppressLint("RecyclerView") final int position) {
         final String uid = modelPosts.get(position).getUid();
         String nameh = modelPosts.get(position).getUname();
         final String titlee = modelPosts.get(position).getTitle();
@@ -78,14 +79,14 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         String comm = modelPosts.get(position).getPcomments();
         final String pid = modelPosts.get(position).getPtime();
         Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
-        calendar.setTimeInMillis(Long.parseLong(ptime));
+//        calendar.setTimeInMillis(Long.parseLong(ptime));
         String timedate = DateFormat.format("dd/MM/yyyy hh:mm aa", calendar).toString();
-        holder.name.setText(nameh);
-        holder.title.setText(titlee);
-        holder.description.setText(descri);
-        holder.time.setText(timedate);
-        holder.like.setText(plike + " Likes");
-        holder.comments.setText(comm + " Comments");
+//        holder.name.setText(nameh);
+//        holder.title.setText(titlee);
+//        holder.description.setText(descri);
+//        holder.time.setText(timedate);
+//        holder.like.setText(plike + " Likes");
+//        holder.comments.setText(comm + " Comments");
         setLikes(holder, ptime);
         try {
             Glide.with(context).load(dp).into(holder.picture);
@@ -204,13 +205,13 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         liekeref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.child(pid).hasChild(myuid)) {
-                    holder.likebtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_liked, 0, 0, 0);
-                    holder.likebtn.setText("Liked");
-                } else {
-                    holder.likebtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_like, 0, 0, 0);
-                    holder.likebtn.setText("Like");
-                }
+//                if (dataSnapshot.child(pid).hasChild(myuid)) {
+//                    holder.likebtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_liked, 0, 0, 0);
+//                    holder.likebtn.setText("Liked");
+//                } else {
+//                    holder.likebtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_like, 0, 0, 0);
+//                    holder.likebtn.setText("Like");
+//                }
             }
 
             @Override

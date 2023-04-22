@@ -6,9 +6,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.tripassistant.models.ModelPost;
@@ -30,16 +27,13 @@ public class ExploreActivity extends AppCompatActivity {
     List<ModelPost> posts;
     AdapterPosts adapterPosts;
 
-    public ExploreActivity() {
-        // Required empty public constructor
-    }
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_explore);
 
-//    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this activity
-        View view = inflater.inflate(R.layout.activity_explore, container, false);
         firebaseAuth = FirebaseAuth.getInstance();
-        recyclerView = view.findViewById(R.id.postrecyclerview);
+        recyclerView = findViewById(R.id.postrecyclerview);
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setReverseLayout(true);
@@ -47,7 +41,6 @@ public class ExploreActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
         posts = new ArrayList<>();
         loadPosts();
-        return view;
     }
 
     private void loadPosts() {
@@ -71,6 +64,7 @@ public class ExploreActivity extends AppCompatActivity {
             }
         });
     }
+
     // Search post code
     private void searchPosts(final String search) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("trips");
@@ -95,11 +89,5 @@ public class ExploreActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), databaseError.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
-    }
-        @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_explore);
-
     }
 }
