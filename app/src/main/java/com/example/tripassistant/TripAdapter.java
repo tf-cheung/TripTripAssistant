@@ -15,9 +15,11 @@ import java.util.List;
 public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder> {
 
     private List<Trip> trips;
+    private String username;
 
-    public TripAdapter(List<Trip> trips) {
+    public TripAdapter(List<Trip> trips, String username) {
         this.trips = trips;
+        this.username = username;
     }
 
     @NonNull
@@ -58,6 +60,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
                     intent.putExtra("tripId", trip.getTripId());
                     intent.putExtra("tripName", trip.getTripName());
                     intent.putExtra("startDate", trip.getStartDate());
+                    intent.putExtra("username", username);
                     itemView.getContext().startActivity(intent);
                 }
             });
@@ -65,5 +68,9 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
     }
     public void setTripsList(List<Trip> newTripsList) {
         this.trips = newTripsList;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

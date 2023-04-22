@@ -54,7 +54,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public class TripDetailsActivity extends AppCompatActivity implements OnMapReadyCallback {
-    String tripId,tripName,startDate;
+    String tripId,tripName,startDate, username;
     private GoogleMap mMap;
     private MapView mapView;
     private PlacesClient placesClient;
@@ -90,6 +90,7 @@ public class TripDetailsActivity extends AppCompatActivity implements OnMapReady
         tripId = getIntent().getStringExtra("tripId");
         tripName = getIntent().getStringExtra("tripName");
         startDate = getIntent().getStringExtra("startDate");
+        username = getIntent().getStringExtra("username");
 
         tripNameTextView = findViewById(R.id.trip_name_text_view);
         startDateTextView = findViewById(R.id.start_date_text_view);
@@ -111,6 +112,7 @@ public class TripDetailsActivity extends AppCompatActivity implements OnMapReady
             public void onClick(View v) {
                 Intent intent = new Intent(TripDetailsActivity.this, ExpenseActivity.class);
                 intent.putExtra("tripId",tripId);
+                intent.putExtra("username", username);
                 startActivity(intent);
             }
         });

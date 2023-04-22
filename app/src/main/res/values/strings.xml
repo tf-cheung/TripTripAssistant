@@ -74,4 +74,5 @@
     <string name="you_borrowed">you borrowed US$%s</string>
     <string name="remind">Remind</string>
     <string name="settle_up_info">%s paid %s US$%s</string>
+    <string name="hello">Hello, %s!</string>
 </resources>

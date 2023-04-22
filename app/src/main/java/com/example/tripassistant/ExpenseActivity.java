@@ -68,8 +68,8 @@ public class ExpenseActivity extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
 
         Intent intent = getIntent();
-        tripId = intent.getStringExtra("tripId") == null ? "-NTQdSYhAYbUmzB71vRU" : intent.getStringExtra("tripId");
-        String username = intent.getStringExtra("username") == null ? "Jade" : intent.getStringExtra("username");
+        tripId = intent.getStringExtra("tripId");
+        String username = intent.getStringExtra("username");
 
         tripsRef = FirebaseDatabase.getInstance().getReference("trips");
         DatabaseReference tripRef = tripsRef.child(tripId);
