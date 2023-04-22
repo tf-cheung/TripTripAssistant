@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/navigation_activity1"
+        android:icon="@drawable/ic_trip_activity"
+        android:title="Trips" />
+    <item
+        android:id="@+id/navigation_activity2"
+        android:icon="@drawable/ic_expense_activity"
+        android:title="Expense" />
+    <item
+        android:id="@+id/navigation_activity3"
+        android:icon="@drawable/ic_compass_acitivty"
+        android:title="Compass" />
+</menu>

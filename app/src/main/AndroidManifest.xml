@@ -15,7 +15,6 @@
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
     <uses-permission android:name="android.permission.INTERACT_ACROSS_APPS" />
-
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -25,14 +24,25 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TripAssistant"
         tools:targetApi="31">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCAznj8pCSFwiLuuDyqLIcwSucnEV2K0KM"/>
+
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TripDetailsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AddTripActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ExpenseActivity"
+            android:exported="false" />
         <activity
             android:name=".ViewExpenseActivity"
             android:exported="false" />
-
-        <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyCAznj8pCSFwiLuuDyqLIcwSucnEV2K0KM" />
-
         <activity
             android:name=".SelectPayeeActivity"
             android:exported="false" />
@@ -41,15 +51,6 @@
             android:exported="false" />
         <activity
             android:name=".AddExpenseActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ExpenseActivity"
-            android:exported="true" />
-        <activity
-            android:name=".TripDetailsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".AddTripActivity"
             android:exported="false" />
         <activity
             android:name=".DisplayTripActivity"
