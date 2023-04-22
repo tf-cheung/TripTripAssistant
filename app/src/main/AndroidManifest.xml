@@ -49,8 +49,21 @@
         <activity
             android:name=".ExpenseActivity"
             android:exported="false" />
-
         <activity
+            android:name=".ViewExpenseActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SelectPayeeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SelectPayerActivity"
+            android:exported="false" />
+        <activity
+            android:name=".AddExpenseActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DisplayTripActivity"
+            android:exported="true">
             android:name=".ExploreActivity"
             android:exported="true" >
             <intent-filter>
