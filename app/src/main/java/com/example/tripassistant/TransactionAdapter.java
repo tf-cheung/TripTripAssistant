@@ -112,12 +112,12 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
                 if (dataSnapshot.exists()) {
                     for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
                         String userEmail = userSnapshot.child("email").getValue(String.class);
-                        Log.d("DEBUG", userEmail);
                         String subject = "Trip Assistant Reminder";
                         String body = String.format("Hello %s! This is a reminder that you owe %s US$%s for expenses in your Trip Assistant group \"%s\". ", transaction.getPayee(), transaction.getPayer(), df.format(transaction.getAmount()), tripName);
 
-                        Intent intent = new Intent(Intent.ACTION_SENDTO);
-                        intent.setData(Uri.parse("mailto:" + userEmail));
+                        Intent intent = new Intent(Intent.ACTION_SEND);
+                        intent.setType("text/plain");
+                        intent.putExtra(Intent.EXTRA_EMAIL, new String[] { userEmail });
                         intent.putExtra(Intent.EXTRA_SUBJECT, subject);
                         intent.putExtra(Intent.EXTRA_TEXT, body);
 

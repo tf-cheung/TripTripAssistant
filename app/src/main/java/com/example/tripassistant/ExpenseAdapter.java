@@ -52,7 +52,7 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
         if (expense.getDescription().equals("Settle up")) {
             holder.descriptionTV.setText(context.getResources().getString(R.string.settle_up_info, expense.getPayer(), expense.getPayees().keySet().iterator().next(), decimalFormat.format(expense.getAmount())));
         } else {
-            holder.descriptionTV.setText(expense.getDescription().trim());
+            holder.descriptionTV.setText(trimDescription(expense.getDescription()));
         }
         float amount = 0;
         if (expense.getPayer().equals(username)) amount += expense.getAmount();
@@ -95,6 +95,11 @@ public class ExpenseAdapter extends RecyclerView.Adapter<ExpenseAdapter.ViewHold
             descriptionTV = itemView.findViewById(R.id.description_text_view);
             amountTV = itemView.findViewById(R.id.amount_text_view);
         }
+    }
+
+    private String trimDescription(String s) {
+        s = s.trim();
+        return s.length() <= 20 ? s : s.substring(0, 20) + "..";
     }
 }
 
