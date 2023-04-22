@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/light_gray">
+    android:background="@color/white">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -29,13 +29,7 @@
 
     </RelativeLayout>
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/car2"
-        app:layout_anchor="@+id/relativeLayout"
-        app:layout_anchorGravity="center" />
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -54,8 +48,8 @@
             android:hint="@string/email"
             android:inputType="textEmailAddress"
             android:minHeight="48dp"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
+            android:textColor="@color/black"
+            android:textColorHint="@color/light_gray"
             android:textStyle="bold" />
 
         <EditText
@@ -66,8 +60,8 @@
             android:hint="@string/username"
             android:inputType="text"
             android:minHeight="48dp"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
+            android:textColor="@color/black"
+            android:textColorHint="@color/light_gray"
             android:textStyle="bold" />
 
         <EditText
@@ -78,8 +72,8 @@
             android:hint="@string/password"
             android:inputType="textPassword"
             android:minHeight="48dp"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
+            android:textColor="@color/black"
+            android:textColorHint="@color/light_gray"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/signup_confirm_password" />
 
@@ -110,8 +104,8 @@
             android:hint="@string/confirm_password"
             android:inputType="textPassword"
             android:minHeight="48dp"
-            android:textColor="@color/white"
-            android:textColorHint="@color/white"
+            android:textColor="@color/black"
+            android:textColorHint="@color/light_gray"
             android:textStyle="bold"/>
 
         <LinearLayout
@@ -136,7 +130,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/already_have_an_account_login"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textStyle="bold"
                 android:textSize="14sp" />
 
@@ -149,7 +143,7 @@
             android:layout_gravity="bottom|start"
             android:background="?android:attr/selectableItemBackground"
             android:src="@drawable/left"
-            app:tint="@color/white"
+            app:tint="@color/black"
             android:contentDescription="@string/back_button_description" />
 
             </LinearLayout>

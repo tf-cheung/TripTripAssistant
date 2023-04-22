@@ -28,7 +28,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyCAznj8pCSFwiLuuDyqLIcwSucnEV2K0KM"/>
         <activity
-            android:name=".LoginActivity"
+            android:name=".DisplayTripActivity"
             android:exported="false" />
         <activity
             android:name=".TripDetailsActivity"
@@ -59,7 +59,7 @@
             android:name=".AddExpenseActivity"
             android:exported="false" />
         <activity
-            android:name=".DisplayTripActivity"
+            android:name=".LoginActivity"
             android:exported="true">
 
             <intent-filter>

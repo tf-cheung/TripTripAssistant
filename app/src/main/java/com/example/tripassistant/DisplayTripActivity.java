@@ -6,6 +6,7 @@ import android.Manifest;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,14 +33,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tripassistant.models.Trip;
 import com.example.tripassistant.models.User;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.TaskCompletionSource;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -60,7 +66,7 @@ public class DisplayTripActivity extends AppCompatActivity {
     private String username;
 
 
-    private String currentUserId = "KNALPmRX2VNl7lnBYdhq2gAHXBr1";
+    private String currentUserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,25 +74,17 @@ public class DisplayTripActivity extends AppCompatActivity {
         setContentView(R.layout.activity_display_trip);
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
-//        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-//        bottomNavigationView.setOnItemSelectedListener(item -> {
-//            int itemId = item.getItemId();
-//            if (itemId == R.id.navigation_activity1 && !this.getClass().equals(DisplayTripActivity.class)) {
-//                Intent intent = new Intent(this, DisplayTripActivity.class);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-//                startActivity(intent);
-//            } else if (itemId == R.id.navigation_activity2 && !this.getClass().equals(ExpenseActivity.class)) {
-//                Intent intent = new Intent(this, ExpenseActivity.class);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-//                startActivity(intent);
-//            } else if (itemId == R.id.navigation_activity3 && !this.getClass().equals(LoginActivity.class)) {
-//                Intent intent = new Intent(this, LoginActivity.class);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-//                startActivity(intent);
-//            }
-//            return true;
-//        });
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser == null) {
+            // If the user is not logged in, redirect them to LoginActivity
+            Intent intent = new Intent(DisplayTripActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
 
+        String userEmail = currentUser.getEmail();
 
         progressDialog = new Dialog(this);
         progressDialog.setContentView(R.layout.progress_dialog);
@@ -100,23 +98,48 @@ public class DisplayTripActivity extends AppCompatActivity {
         menuButton.setOnClickListener(view -> drawerLayout.openDrawer(GravityCompat.START));
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users");
 
-        databaseReference.child(currentUserId).addListenerForSingleValueEvent(new ValueEventListener() {
+        Query query = databaseReference.orderByChild("email").equalTo(userEmail);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    username = dataSnapshot.child("username").getValue(String.class);
-                    String email = dataSnapshot.child("email").getValue(String.class);
-                    TextView navUsername = findViewById(R.id.nav_username);
-                    TextView navEmail = findViewById(R.id.nav_email);
-                    navUsername.setText(getResources().getString(R.string.hello, username));
-                    navUsername.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
-                    tripAdapter.setUsername(username);
-                    navEmail.setText(email);
+                    for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                        currentUserId = userSnapshot.getKey();
+                        break;
+                    }
+                    databaseReference.child(currentUserId).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                username = dataSnapshot.child("username").getValue(String.class);
+                                String email = dataSnapshot.child("email").getValue(String.class);
+                                TextView navUsername = findViewById(R.id.nav_username);
+                                TextView navEmail = findViewById(R.id.nav_email);
+                                navUsername.setText(getResources().getString(R.string.hello, username));
+                                navUsername.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
+                                tripAdapter.setUsername(username);
+                                navEmail.setText(email);
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                        }
+                    });
                 }
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+
+
+        ImageView signOutButton = findViewById(R.id.signout_button);
+        signOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                signOut();
             }
         });
 
@@ -129,8 +152,6 @@ public class DisplayTripActivity extends AppCompatActivity {
         recyclerView.setAdapter(tripAdapter);
 
 
-
-        mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         loadUserTrips();
@@ -203,6 +224,17 @@ public class DisplayTripActivity extends AppCompatActivity {
                 Log.e("DisplayTripActivity", "Error loading trips: " + databaseError.getMessage());
             }
         });
+    }
+    private void signOut() {
+        mAuth.signOut();
+        // Clear the SharedPreferences data
+        SharedPreferences.Editor editor = getSharedPreferences("login", MODE_PRIVATE).edit();
+        editor.clear();
+        editor.apply();
+
+        Intent intent = new Intent(DisplayTripActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 }
