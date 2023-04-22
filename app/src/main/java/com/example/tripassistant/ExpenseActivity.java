@@ -4,6 +4,7 @@ import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,7 +20,6 @@ import android.widget.Toast;
 import com.example.tripassistant.models.Expense;
 import com.example.tripassistant.models.Transaction;
 import com.example.tripassistant.models.Trip;
-import com.example.tripassistant.models.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,7 +28,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -49,7 +48,7 @@ public class ExpenseActivity extends AppCompatActivity {
     private Button historyBtn, balancesBtn;
     private TextView instructionTV;
     private RecyclerView expenseRV, balancesRV;
-    private int selectedTab;
+    private int selectedTab, green, white;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +63,9 @@ public class ExpenseActivity extends AppCompatActivity {
         balancesRV = findViewById(R.id.balances_recycler_view);
         progressBar = findViewById(R.id.progress_bar);
         TextView tripNameTV = findViewById(R.id.trip_name_text_view);
+
+        green = ContextCompat.getColor(this, R.color.green);
+        white = ContextCompat.getColor(this, R.color.white);
 
         progressBar.setVisibility(View.VISIBLE);
 
@@ -143,7 +145,7 @@ public class ExpenseActivity extends AppCompatActivity {
                 expenseAdapter.notifyItemRangeInserted(0, expenseList.size());
                 transactions.clear();
                 transactions.addAll(calculateTransactions());
-                transactionAdapter.notifyDataSetChanged();
+                transactionAdapter.notifyItemRangeInserted(0, transactions.size());
                 progressBar.setVisibility(View.GONE);
             }
 
@@ -155,20 +157,20 @@ public class ExpenseActivity extends AppCompatActivity {
     }
 
     private void selectHistory() {
-        balancesBtn.setBackgroundColor(getResources().getColor(R.color.white));
-        balancesBtn.setTextColor(getResources().getColor(R.color.green));
-        historyBtn.setBackgroundColor(getResources().getColor(R.color.green));
-        historyBtn.setTextColor(getResources().getColor(R.color.white));
+        balancesBtn.setBackgroundColor(white);
+        balancesBtn.setTextColor(green);
+        historyBtn.setBackgroundColor(green);
+        historyBtn.setTextColor(white);
         instructionTV.setText(getResources().getString(R.string.take_a_look_at_past_expenses_in_your_trip));
         expenseRV.setVisibility(View.VISIBLE);
         balancesRV.setVisibility(View.GONE);
     }
 
     private void selectBalances() {
-        historyBtn.setBackgroundColor(getResources().getColor(R.color.white));
-        historyBtn.setTextColor(getResources().getColor(R.color.green));
-        balancesBtn.setBackgroundColor(getResources().getColor(R.color.green));
-        balancesBtn.setTextColor(getResources().getColor(R.color.white));
+        historyBtn.setBackgroundColor(white);
+        historyBtn.setTextColor(green);
+        balancesBtn.setBackgroundColor(green);
+        balancesBtn.setTextColor(white);
         instructionTV.setText(getResources().getString(R.string.balance_instruction));
         expenseRV.setVisibility(View.GONE);
         balancesRV.setVisibility(View.VISIBLE);

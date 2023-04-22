@@ -13,9 +13,9 @@
 
         <LinearLayout
             android:id="@+id/transaction_layout"
-            android:paddingBottom="6dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:paddingBottom="6dp">
 
             <TextView
                 android:id="@+id/payee_text_view"
@@ -54,11 +54,11 @@
             android:layout_below="@+id/transaction_layout">
 
             <Button
-                android:layout_toStartOf="@+id/settle_up_button"
-                android:layout_marginEnd="12dp"
                 android:id="@+id/remind_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:layout_toStartOf="@+id/settle_up_button"
                 android:backgroundTint="@color/white"
                 android:text="@string/remind"
                 android:textAllCaps="false"
@@ -66,10 +66,10 @@
                 android:textSize="12sp" />
 
             <Button
-                android:layout_alignParentEnd="true"
                 android:id="@+id/settle_up_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
                 android:backgroundTint="@color/green"
                 android:text="@string/settle_up"
                 android:textAllCaps="false"

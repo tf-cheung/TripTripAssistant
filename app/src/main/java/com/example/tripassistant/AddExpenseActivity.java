@@ -8,14 +8,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.example.tripassistant.models.ChecklistOption;
 import com.example.tripassistant.models.Expense;
 import com.example.tripassistant.models.User;
 import com.google.firebase.database.DataSnapshot;
@@ -23,8 +21,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -85,13 +81,9 @@ public class AddExpenseActivity extends AppCompatActivity {
             });
         }
 
-        backBtn.setOnClickListener(view -> {
-            onBackPressed();
-        });
+        backBtn.setOnClickListener(view -> onBackPressed());
 
-        okayBtn.setOnClickListener(view -> {
-            handleExpenseSubmit();
-        });
+        okayBtn.setOnClickListener(view -> handleExpenseSubmit());
 
         selectPayerBtn.setOnClickListener(view -> {
             Intent intent = new Intent(AddExpenseActivity.this, SelectPayerActivity.class);
@@ -152,7 +144,7 @@ public class AddExpenseActivity extends AppCompatActivity {
                 selectedIndex = data.getIntExtra("selectedIndex", -1);
                 String selectedName = memberNames.get(selectedIndex);
                 if (!selectedName.equals(username)) selectPayerBtn.setText(selectedName);
-                else selectPayerBtn.setText("you");
+                else selectPayerBtn.setText(getString(R.string.you));
             } else if (requestCode == SELECT_PAYEE_REQUEST_CODE) {
                 selectedTab = data.getIntExtra("selectedTab", 0);
                 selectPayeeBtn.setText(selectedTab == 0 ? "Equally" : "Unequally");

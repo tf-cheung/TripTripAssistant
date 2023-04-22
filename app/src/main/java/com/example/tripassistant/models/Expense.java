@@ -56,6 +56,7 @@ public class Expense implements Parcelable {
         return date;
     }
 
+    @NonNull
     public String toString() {
         return "Payer: " + payer + "\n" +
                 "Description: " + description + "\n" +

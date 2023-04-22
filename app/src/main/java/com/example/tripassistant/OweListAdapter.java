@@ -1,19 +1,14 @@
 package com.example.tripassistant;
 
 import android.content.Context;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.tripassistant.models.ChecklistOption;
 import com.example.tripassistant.models.SharelistOption;
 
 import java.util.List;
@@ -30,6 +25,7 @@ public class OweListAdapter extends RecyclerView.Adapter<OweListAdapter.ViewHold
         this.type = type;
     }
 
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())

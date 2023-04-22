@@ -16,7 +16,6 @@ import java.util.List;
 
 public class SelectPayerActivity extends AppCompatActivity {
 
-    private List<String> tripMembers;
     private PayerListAdapter adapter;
 
     @Override
@@ -25,12 +24,12 @@ public class SelectPayerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_select_payer);
 
         ImageButton backBtn = findViewById(R.id.back_button);
-        backBtn.setOnClickListener(view -> {
-            onBackPressed();
-        });
+        RecyclerView memberRV = findViewById(R.id.memberRV);
+
+        backBtn.setOnClickListener(view -> onBackPressed());
 
         Intent intent = getIntent();
-        tripMembers = intent.getStringArrayListExtra("tripMembers");
+        List<String> tripMembers = intent.getStringArrayListExtra("tripMembers");
         int selectedItem = intent.getIntExtra("currIndex", -1);
 
         List<ChecklistOption> optionList = new ArrayList<>();
@@ -38,7 +37,6 @@ public class SelectPayerActivity extends AppCompatActivity {
             optionList.add(new ChecklistOption(member, false));
         }
 
-        RecyclerView memberRV = findViewById(R.id.memberRV);
         memberRV.setLayoutManager(new LinearLayoutManager(this));
         adapter = new PayerListAdapter(this, optionList, selectedItem);
         memberRV.setAdapter(adapter);
