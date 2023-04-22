@@ -1,19 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingHorizontal="10dp"
     tools:context=".ExpenseActivity">
 
+    <TextView
+        android:id="@+id/trip_name_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/home"
+        android:textColor="@color/secondary"
+        android:textSize="32sp" />
 
-<!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
-<!--        android:id="@+id/bottom_navigation"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_alignParentBottom="true"-->
-<!--        app:menu="@menu/bottom_navigation_menu"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        />-->
+    <LinearLayout
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/history_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:backgroundTint="@color/green"
+            android:textAllCaps="false"
+            android:text="@string/history" />
+
+        <Button
+            android:id="@+id/balances_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/green"
+            android:backgroundTint="@color/white"
+            android:textAllCaps="false"
+            android:text="@string/balances" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/instruction_text_view"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="5dp"
+        android:text="@string/take_a_look_at_past_expenses_in_your_trip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_marginTop="120dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/expense_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.7"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/balances_recycler_view"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="0dp"
+        android:layout_weight="0.7"/>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addExpenseFAB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginVertical="6dp"
+        android:src="@android:drawable/ic_input_add"
+        android:contentDescription="@string/add_new_expense" />
+
+</LinearLayout>

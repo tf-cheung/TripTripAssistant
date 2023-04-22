@@ -12,6 +12,7 @@ import android.os.Bundle;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -56,6 +57,7 @@ public class DisplayTripActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private final int PERMISSION_CODE = 1;
     private Dialog progressDialog;
+    private String username;
 
 
     private String currentUserId = "KNALPmRX2VNl7lnBYdhq2gAHXBr1";
@@ -102,11 +104,13 @@ public class DisplayTripActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    String username = dataSnapshot.child("username").getValue(String.class);
+                    username = dataSnapshot.child("username").getValue(String.class);
                     String email = dataSnapshot.child("email").getValue(String.class);
                     TextView navUsername = findViewById(R.id.nav_username);
                     TextView navEmail = findViewById(R.id.nav_email);
-                    navUsername.setText(username);
+                    navUsername.setText(getResources().getString(R.string.hello, username));
+                    navUsername.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
+                    tripAdapter.setUsername(username);
                     navEmail.setText(email);
                 }
             }
@@ -121,7 +125,7 @@ public class DisplayTripActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         tripsList = new ArrayList<>();
-        tripAdapter = new TripAdapter(tripsList);
+        tripAdapter = new TripAdapter(tripsList, username);
         recyclerView.setAdapter(tripAdapter);
 
 
