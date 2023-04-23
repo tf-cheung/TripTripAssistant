@@ -215,11 +215,8 @@ public class AddTripActivity extends AppCompatActivity {
             }
         });
 
-        TextView cancelButton = findViewById(R.id.cancel_button);
-        cancelButton.setOnClickListener(v -> {
-            onBackPressed();
-
-        });
+        Button cancelButton = findViewById(R.id.cancel_button);
+        cancelButton.setOnClickListener(v -> onBackPressed());
 
 
         startDateText.setOnClickListener(v -> {

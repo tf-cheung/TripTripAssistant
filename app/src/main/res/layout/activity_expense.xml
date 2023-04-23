@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingHorizontal="10dp"
-    tools:context=".ExpenseActivity">
+    tools:context=".ExpenseActivity"
+    android:background="@drawable/background">
 
     <TextView
         android:id="@+id/trip_name_text_view"
@@ -70,13 +72,15 @@
         android:layout_weight="0.7"
         android:visibility="gone" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <ImageButton
         android:id="@+id/addExpenseFAB"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_gravity="center_horizontal"
         android:layout_marginVertical="6dp"
+        android:background="?android:attr/selectableItemBackground"
         android:contentDescription="@string/add_new_expense"
-        android:src="@android:drawable/ic_input_add" />
+        android:src="@drawable/ic_baseline_add_24"
+        app:tint="@color/wedgewood" />
 
 </LinearLayout>

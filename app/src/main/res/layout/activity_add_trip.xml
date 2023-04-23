@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/add_trip_layout"
+    android:background="@drawable/background"
     tools:context=".MainActivity">
 
     <TextView
@@ -36,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="15"
-            android:background="@color/white"
+            android:background="@android:color/transparent"
             android:inputType="textPersonName"
             android:selectAllOnFocus="true"
             android:textSize="16sp" />
@@ -49,7 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
-        android:text="Member"
+        android:text="@string/member"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/trip_name_input_layout" />
@@ -90,7 +91,7 @@
             android:hint="Enter member name"
             android:textColorHint="#CDCBCB"
             android:selectAllOnFocus="true"
-            android:background="@android:color/white"
+            android:background="@android:color/transparent"
             android:inputType="text" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -138,19 +139,20 @@
         android:layout_marginTop="55dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:text="Create Trip"
+        android:backgroundTint="@color/green"
+        android:text="@string/create_trip"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/start_date_label" />
 
-    <TextView
+    <Button
         android:id="@+id/cancel_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Cancel"
-        android:textColor="@android:color/black"
-        android:textSize="18sp"
+        android:text="@string/cancel"
+        android:textColor="@color/green"
+        android:backgroundTint="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/create_trip_button" />
