@@ -37,7 +37,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
     String myuid;
     List<StopPoint> modelStopPoints;
 
-    private DatabaseReference liekeref, tripref;
+    private DatabaseReference liekeref, spref;
     boolean mprocesslike = false;
 
     public AdapterPosts(Context context, List<StopPoint> modelTrips) {
@@ -45,7 +45,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         this.modelStopPoints = modelTrips;
         myuid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         liekeref = FirebaseDatabase.getInstance().getReference().child("Likes");
-        tripref = FirebaseDatabase.getInstance().getReference().child("trips");
+        spref = FirebaseDatabase.getInstance().getReference().child("trips").child("stopPoints");
     }
 
 
@@ -83,7 +83,11 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         holder.likebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final int plike = Integer.parseInt(modelStopPoints.get(position).getPlike());
+                String stringVal = modelStopPoints.get(position).getPlike();
+                if(stringVal == null || stringVal.isEmpty()) {
+                    stringVal = "0";
+                }
+                final int plike = Integer.parseInt(stringVal);
                 mprocesslike = true;
                 final String spId = modelStopPoints.get(position).getId();
                 liekeref.addValueEventListener(new ValueEventListener() {
@@ -91,11 +95,11 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (mprocesslike) {
                             if (dataSnapshot.child(spId).hasChild(myuid)) {
-                                tripref.child(spId).child("plike").setValue("" + (plike - 1));
+                                spref.child(spId).child("plike").setValue("" + (plike - 1));
                                 liekeref.child(spId).child(myuid).removeValue();
                                 mprocesslike = false;
                             } else {
-                                tripref.child(spId).child("plike").setValue("" + (plike + 1));
+                                spref.child(spId).child("plike").setValue("" + (plike + 1));
                                 liekeref.child(spId).child(myuid).setValue("Liked");
                                 mprocesslike = false;
                             }
@@ -109,12 +113,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
                 });
             }
         });
-        holder.more.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, TripDetailsActivity.class);
-            }
-        });
+
 
     }
 
@@ -159,6 +158,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
             title = itemView.findViewById(R.id.trip_name_text_view);
             address = itemView.findViewById(R.id.address);
             like = itemView.findViewById(R.id.like_count_text_view);
+            likebtn = itemView.findViewById(R.id.like_button);
 
 //            picture = itemView.findViewById(R.id.picturetv);
 //            image = itemView.findViewById(R.id.pimagetv);

@@ -17,8 +17,8 @@
             android:id="@+id/trip_name_text_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Trip Name"
-            android:textSize="16sp" />
+            android:text="StopPoint Name"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/start_date"
@@ -42,13 +42,17 @@
             android:orientation="horizontal"
             android:layout_marginTop="16dp">
 
-            <ImageButton
+            <Button
                 android:id="@+id/like_button"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:src="@drawable/ic_like"
-                android:onClick="onLikeButtonClick" />
-
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:autoLink="all"
+                android:backgroundTint="@color/green"
+                app:icon="@drawable/ic_like"
+                android:padding="5dp"
+                android:textColor="@color/white"
+                android:text="Like" />
             <TextView
                 android:id="@+id/like_count_text_view"
                 android:layout_width="wrap_content"
@@ -63,21 +67,9 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
 
-            <TextView
-                android:id="@+id/dislike_count_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0 Dislikes"
-                android:layout_gravity="center_vertical"
-                android:layout_marginEnd="8dp"
-                android:textSize="14sp" />
 
-            <ImageButton
-                android:id="@+id/dislike_button"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:src="@drawable/ic_dislike"
-                android:onClick="onDislikeButtonClick" />
+
+
 
         </LinearLayout>
 
