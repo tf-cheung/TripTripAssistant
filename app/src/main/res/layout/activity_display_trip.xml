@@ -95,7 +95,7 @@
 
         <LinearLayout
             android:id="@+id/sidebar_layout"
-            android:layout_width="300dp"
+            android:layout_width="250dp"
             android:layout_height="match_parent"
             android:layout_gravity="start"
             android:background="@color/white"
@@ -107,7 +107,6 @@
                 android:gravity="bottom"
                 android:orientation="horizontal">
 
-
                 <ImageButton
                     android:id="@+id/signout_button"
                     android:layout_width="wrap_content"
@@ -116,6 +115,7 @@
                     android:contentDescription="@string/signout_button_description"
                     android:padding="8dp"
                     android:src="@drawable/ic_logout_black" />
+
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
