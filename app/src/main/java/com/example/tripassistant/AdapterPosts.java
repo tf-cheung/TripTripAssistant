@@ -45,7 +45,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         this.modelStopPoints = modelTrips;
         myuid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         liekeref = FirebaseDatabase.getInstance().getReference().child("Likes");
-        spref = FirebaseDatabase.getInstance().getReference().child("trips").child("stopPoints");
+        spref = FirebaseDatabase.getInstance().getReference().child("trips");
     }
 
 
@@ -130,6 +130,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
                     holder.likebtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_like, 0, 0, 0);
                     holder.likebtn.setText("Like");
                 }
+                holder.like.setText(modelStopPoints.get(holder.getAdapterPosition()).getPlike() + " Likes");
             }
 
             @Override
