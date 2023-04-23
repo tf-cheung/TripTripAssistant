@@ -137,7 +137,6 @@ public class ExpenseActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 expenseList.clear();
-                expenseAdapter.notifyDataSetChanged();
                 for (DataSnapshot expenseSnapshot : snapshot.getChildren()) {
                     Expense expense = expenseSnapshot.getValue(Expense.class);
                     if (expense != null) {
@@ -145,10 +144,10 @@ public class ExpenseActivity extends AppCompatActivity {
                     }
                 }
                 Collections.reverse(expenseList);
-                expenseAdapter.notifyItemRangeInserted(0, expenseList.size());
+                expenseAdapter.notifyDataSetChanged();
                 transactions.clear();
                 transactions.addAll(calculateTransactions());
-                transactionAdapter.notifyItemRangeInserted(0, transactions.size());
+                transactionAdapter.notifyDataSetChanged();
                 progressBar.setVisibility(View.GONE);
             }
 
