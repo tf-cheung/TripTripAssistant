@@ -1,5 +1,6 @@
 package com.example.tripassistant;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tripassistant.models.Trip;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder> {
@@ -34,6 +37,18 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
         Trip trip = trips.get(position);
         holder.tripNameTextView.setText(trip.getTripName());
         holder.starDateTextView.setText(trip.getStartDate());
+
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        LocalDate tripDate = LocalDate.parse(trip.getStartDate(), dateFormatter);
+        LocalDate today = LocalDate.now();
+
+        if (tripDate.isBefore(today)) {
+            holder.tripNameTextView.setTextColor(Color.GRAY);
+            holder.starDateTextView.setTextColor(Color.GRAY);
+        } else {
+            holder.tripNameTextView.setTextColor(Color.parseColor("#5381a5"));
+            holder.starDateTextView.setTextColor(Color.parseColor("#5381a5"));
+        }
     }
 
 

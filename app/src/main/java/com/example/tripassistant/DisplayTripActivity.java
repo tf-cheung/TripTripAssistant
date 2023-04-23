@@ -207,8 +207,10 @@ public class DisplayTripActivity extends AppCompatActivity {
 
                             DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
+                            LocalDate today = LocalDate.now();
                             tripsList = tripsList.stream()
-                                    .sorted(Comparator.comparing(trip -> LocalDate.parse(trip.getStartDate(), dateFormatter)))
+                                    .sorted(Comparator.comparing((Trip trip) -> LocalDate.parse(trip.getStartDate(), dateFormatter).isBefore(today))
+                                            .thenComparing(trip -> LocalDate.parse(trip.getStartDate(), dateFormatter)))
                                     .collect(Collectors.toList());
                             tripAdapter.setTripsList(tripsList);
                             tripAdapter.notifyDataSetChanged();
