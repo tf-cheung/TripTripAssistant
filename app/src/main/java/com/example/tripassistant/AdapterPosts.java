@@ -35,14 +35,14 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
 
     Context context;
     String myuid;
-    List<StopPoint> modelTrips;
+    List<StopPoint> modelStopPoints;
 
     private DatabaseReference liekeref, tripref;
     boolean mprocesslike = false;
 
     public AdapterPosts(Context context, List<StopPoint> modelTrips) {
         this.context = context;
-        this.modelTrips = modelTrips;
+        this.modelStopPoints = modelTrips;
         myuid = FirebaseAuth.getInstance().getCurrentUser().getUid();
         liekeref = FirebaseDatabase.getInstance().getReference().child("Likes");
         tripref = FirebaseDatabase.getInstance().getReference().child("trips");
@@ -58,46 +58,45 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull final MyHolder holder, @SuppressLint("RecyclerView") final int position) {
-        final String uid = modelTrips.get(position).getId();
-        final String title = modelTrips.get(position).getName();
-        final String startDate = modelTrips.get(position).getDate();
-        final String address = modelTrips.get(position).getAddress();
+        final String uid = modelStopPoints.get(position).getId();
+        final String title = modelStopPoints.get(position).getName();
+        final String startDate = modelStopPoints.get(position).getDate();
+        final String address = modelStopPoints.get(position).getAddress();
+        final String plike = modelStopPoints.get(position).getPlike();
 
         holder.title.setText(title);
         holder.startDate.setText(startDate);
         holder.address.setText(address);
 
 
-        holder.time.setText(timedate);
         holder.like.setText(plike + " Likes");
-        holder.comments.setText(comm + " Comments");
-        setLikes(holder, ptime);
+        setLikes(holder);
 
-        holder.like.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(holder.itemView.getContext(), PostLikedByActivity.class);
-                intent.putExtra("pid", pid);
-                holder.itemView.getContext().startActivity(intent);
-            }
-        });
+//        holder.like.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(holder.itemView.getContext(), PostLikedByActivity.class);
+//                intent.putExtra("pid", pid);
+//                holder.itemView.getContext().startActivity(intent);
+//            }
+//        });
         holder.likebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final int plike = Integer.parseInt(modelTrips.get(position).getPlike());
+                final int plike = Integer.parseInt(modelStopPoints.get(position).getPlike());
                 mprocesslike = true;
-                final String tripId = modelTrips.get(position).getTripId();
+                final String spId = modelStopPoints.get(position).getId();
                 liekeref.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         if (mprocesslike) {
-                            if (dataSnapshot.child(tripId).hasChild(myuid)) {
-                                tripref.child(tripId).child("plike").setValue("" + (plike - 1));
-                                liekeref.child(tripId).child(myuid).removeValue();
+                            if (dataSnapshot.child(spId).hasChild(myuid)) {
+                                tripref.child(spId).child("plike").setValue("" + (plike - 1));
+                                liekeref.child(spId).child(myuid).removeValue();
                                 mprocesslike = false;
                             } else {
-                                tripref.child(tripId).child("plike").setValue("" + (plike + 1));
-                                liekeref.child(tripId).child(myuid).setValue("Liked");
+                                tripref.child(spId).child("plike").setValue("" + (plike + 1));
+                                liekeref.child(spId).child(myuid).setValue("Liked");
                                 mprocesslike = false;
                             }
                         }
@@ -116,23 +115,16 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
                 Intent intent = new Intent(context, TripDetailsActivity.class);
             }
         });
-        holder.comment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, TripDetailsActivity.class);
-                intent.putExtra("pid", ptime);
-                context.startActivity(intent);
-            }
-        });
+
     }
 
 
     private void setLikes(final MyHolder holder) {
-        final String tripId = modelTrips.get(holder.getAdapterPosition()).getTripId();
+        final String spId = modelStopPoints.get(holder.getAdapterPosition()).getId();
         liekeref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.child(tripId).hasChild(myuid)) {
+                if (dataSnapshot.child(spId).hasChild(myuid)) {
                     holder.likebtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_liked, 0, 0, 0);
                     holder.likebtn.setText("Liked");
                 } else {
@@ -151,7 +143,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
 
     @Override
     public int getItemCount() {
-        return modelTrips.size();
+        return modelStopPoints.size();
     }
 
     class MyHolder extends RecyclerView.ViewHolder {

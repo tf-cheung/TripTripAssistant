@@ -65,13 +65,14 @@ public class ExploreActivity extends AppCompatActivity {
                     String sptime = dataSnapshot1.child("timeRange").getValue(String.class);
                     double splatitude = dataSnapshot1.child("latitude").getValue(double.class);
                     double splongitude = dataSnapshot1.child("longitude").getValue(double.class);
+                    String plike = dataSnapshot1.child("like").getValue(String.class);
 
                     GenericTypeIndicator<List<String>> genericTypeIndicator = new GenericTypeIndicator<List<String>>() {
                     };
                     List<String> members = dataSnapshot1.child("members").getValue(genericTypeIndicator);
 //                    Trip trip = tripSnapshot.getValue(Trip.class);
 
-                    StopPoint stopPoint = new StopPoint(spId, spName, spAddress, spDate, sptime, splatitude, splongitude);
+                    StopPoint stopPoint = new StopPoint(spId, spName, spAddress, spDate, sptime, splatitude, splongitude, plike);
                     if (stopPoint != null) {
                         posts.add(stopPoint);
                     }
