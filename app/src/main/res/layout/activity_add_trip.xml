@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
-        android:text="Member"
+        android:text="Member (username)"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/trip_name_input_layout" />
@@ -87,7 +87,6 @@
             android:id="@+id/member_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter member name"
             android:textColorHint="#CDCBCB"
             android:selectAllOnFocus="true"
             android:background="@android:color/white"

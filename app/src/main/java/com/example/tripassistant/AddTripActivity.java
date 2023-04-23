@@ -287,7 +287,11 @@ public class AddTripActivity extends AppCompatActivity {
         Chip chip = new Chip(this);
         chip.setText(memberName);
         chip.setCloseIconVisible(true);
-        chip.setOnCloseIconClickListener(v -> memberChipGroup.removeView(chip));
+        chip.setOnCloseIconClickListener(v -> {
+            members.remove(memberName);
+            memberChipGroup.removeView(chip);
+        }
+        );
         memberChipGroup.addView(chip);
     }
 
