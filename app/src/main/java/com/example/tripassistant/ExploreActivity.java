@@ -63,8 +63,11 @@ public class ExploreActivity extends AppCompatActivity {
                     String spAddress = dataSnapshot1.child("address").getValue(String.class);
                     String spDate = dataSnapshot1.child("date").getValue(String.class);
                     String sptime = dataSnapshot1.child("timeRange").getValue(String.class);
-                    double splatitude = dataSnapshot1.child("latitude").getValue(double.class);
-                    double splongitude = dataSnapshot1.child("longitude").getValue(double.class);
+                    DataSnapshot latitude = dataSnapshot1.child("latitude");
+                    double splatitude = latitude.getValue() == null ? 0 :latitude.getValue(double.class);
+
+                    DataSnapshot longitude = dataSnapshot1.child("longitude");
+                    double splongitude = longitude.getValue() == null ? 0 :longitude.getValue(double.class);
                     String plike = dataSnapshot1.child("like").getValue(String.class);
 
                     GenericTypeIndicator<List<String>> genericTypeIndicator = new GenericTypeIndicator<List<String>>() {

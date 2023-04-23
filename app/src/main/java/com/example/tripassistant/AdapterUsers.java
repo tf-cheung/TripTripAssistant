@@ -61,12 +61,12 @@ public class AdapterUsers extends RecyclerView.Adapter<AdapterUsers.MyHolder> {
 
     class MyHolder extends RecyclerView.ViewHolder {
 
-        CircleImageView profiletv;
+//        CircleImageView profiletv;
         TextView name, email;
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);
-            profiletv = itemView.findViewById(R.id.imagep);
+//            profiletv = itemView.findViewById(R.id.imagep);
             name = itemView.findViewById(R.id.namep);
             email = itemView.findViewById(R.id.emailp);
         }

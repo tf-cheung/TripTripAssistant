@@ -4,7 +4,9 @@ public class StopPoint {
     String id,name,address,date,time,plike;
     double latitude,longitude;
 
+    public StopPoint() {
 
+    }
     public StopPoint(String id, String name, String address, String date, String time, double latitude, double longitude, String plike) {
         this.id = id;
         this.name = name;
@@ -16,8 +18,31 @@ public class StopPoint {
         this.plike = plike;
     }
 
-    public String getPlike() { return plike;}
+    public String getPlike() {
+        if (plike == null) {
+            plike = "0";
+        }
+        return plike;}
 
+    public void setPlike(String plike) { this.plike = plike;}
+
+    public String addOnePlike() {
+        if (plike == null) {
+            plike = "1";
+        } else {
+            plike = Integer.parseInt(plike) + 1 + "";
+        }
+        return plike;
+    }
+
+    public String removeOnePlike() {
+        if (plike == null || plike.equals("0") || plike.equals("1")) {
+            plike = "0";
+        } else {
+            plike = Integer.parseInt(plike) - 1 + "";
+        }
+        return plike;
+    }
     public String getId() {
         return id;
     }
