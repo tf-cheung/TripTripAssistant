@@ -1,55 +1,45 @@
 package com.example.tripassistant.models;
 
 public class StopPoint {
-    String id,name,address,date,time,plike;
+    String tripId,spId,name,address,date,time;
+    String liked;
     double latitude,longitude;
 
-    public StopPoint() {
 
-    }
-    public StopPoint(String id, String name, String address, String date, String time, double latitude, double longitude, String plike) {
-        this.id = id;
+    public StopPoint(String tripId, String spId, String name, String address, String date, String time, double latitude, double longitude, String liked) {
+        this.tripId=tripId;
+        this.spId = spId;
         this.name = name;
         this.address = address;
         this.date = date;
         this.time = time;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.plike = plike;
+        this.liked = liked;
     }
 
-    public String getPlike() {
-        if (plike == null) {
-            plike = "0";
-        }
-        return plike;}
-
-    public void setPlike(String plike) { this.plike = plike;}
-
-    public String addOnePlike() {
-        if (plike == null) {
-            plike = "1";
-        } else {
-            plike = Integer.parseInt(plike) + 1 + "";
-        }
-        return plike;
+    public String getTripId() {
+        return tripId;
     }
 
-    public String removeOnePlike() {
-        if (plike == null || plike.equals("0") || plike.equals("1")) {
-            plike = "0";
-        } else {
-            plike = Integer.parseInt(plike) - 1 + "";
-        }
-        return plike;
-    }
-    public String getId() {
-        return id;
+    public void setTripId(String tripId) {
+        this.tripId = tripId;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getSpId() {
+        return spId;
     }
+
+    public void setSpId(String spId) {
+        this.spId = spId;
+    }
+
+    public void setLiked(String liked) {
+        this.liked = liked;
+    }
+
+    public String getLiked() { return liked;}
+
 
     public String getName() {
         return name;
