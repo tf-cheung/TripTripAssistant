@@ -69,6 +69,16 @@
             android:textSize="16sp"
             android:textStyle="bold" />
 
+        <TextView
+            android:id="@+id/startdatetv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start Date"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp"
+            android:textSize="14sp" />
+
 <!--        <TextView-->
 <!--            android:id="@+id/descript"-->
 <!--            android:layout_width="match_parent"-->
