@@ -199,7 +199,7 @@ public class DisplayTripActivity extends AppCompatActivity {
                                 List<String> members = tripSnapshot.child("members").getValue(genericTypeIndicator);
                                 Trip trip = new Trip(tripsId,tripsName,members,startDate);
 
-                                if (trip != null && trip.getMembers().contains(currentUserId)) {
+                                if (trip != null && trip.getMembers() != null && trip.getMembers().contains(currentUserId)) {
                                     tripsList.add(trip);
                                     Log.d("tripid",trip.getTripId());
                                 }
