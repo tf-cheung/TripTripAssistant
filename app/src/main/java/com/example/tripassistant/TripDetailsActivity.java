@@ -212,6 +212,8 @@ public class TripDetailsActivity extends AppCompatActivity implements OnMapReady
             stopPoint.put("address",selectedAddress);
             stopPoint.put("latitude", stopPointLatLng.latitude);
             stopPoint.put("longitude", stopPointLatLng.longitude);
+            stopPoint.put("likedBy", " ");
+            stopPoint.put("liked","0");
 
             // 将停靠点信息添加到 Firebase 数据库
             mDatabaseReference.child(tripId).child("stopPoints").push().setValue(stopPoint)
