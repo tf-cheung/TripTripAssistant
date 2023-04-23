@@ -52,14 +52,14 @@
             android:id="@+id/share_button"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:layout_marginBottom="16dp"
+            android:layout_marginEnd="16dp"
             android:adjustViewBounds="true"
             android:background="?android:attr/selectableItemBackground"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_share"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/stop_points_recycler_view"
+            app:layout_constraintBottom_toBottomOf="@id/trip_name_text_view"
             app:tint="@color/wedgewood" />
 
         <ImageButton

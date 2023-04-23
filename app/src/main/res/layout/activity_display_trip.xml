@@ -5,7 +5,8 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DisplayTripActivity">
+    tools:context=".DisplayTripActivity"
+    android:background="@drawable/background">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -15,19 +16,21 @@
             android:id="@+id/menu_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
             android:src="@drawable/ic_menu"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_margin="10dp" />
+            app:layout_constraintBottom_toBottomOf="@id/create_button" />
 
-        <TextView
+        <Button
             android:id="@+id/create_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Create Trip"
-            android:textColor="#4FBA7F"
-            android:textSize="20sp"
+            android:text="@string/create_trip"
+            android:backgroundTint="@color/white"
+            android:textColor="@color/green"
+            android:textSize="18sp"
+            android:textAllCaps="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_margin="20dp" />
@@ -38,7 +41,7 @@
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:scrollbars="vertical"
-            app:layout_constraintTop_toBottomOf="@id/menu_button" />
+            app:layout_constraintTop_toBottomOf="@id/create_button" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/explore_button"
@@ -46,7 +49,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_explore"
             app:tint="@null"
-            app:backgroundTint="@android:color/darker_gray"
+            app:backgroundTint="@color/quantum_grey400"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_margin="20dp"

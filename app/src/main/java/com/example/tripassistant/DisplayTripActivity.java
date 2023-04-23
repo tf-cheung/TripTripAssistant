@@ -125,7 +125,7 @@ public class DisplayTripActivity extends AppCompatActivity {
 
         loadUserTrips();
 
-        TextView createButton = findViewById(R.id.create_button);
+        Button createButton = findViewById(R.id.create_button);
         createButton.setOnClickListener(v -> {
             Intent intent = new Intent(DisplayTripActivity.this, AddTripActivity.class);
             startActivity(intent);
