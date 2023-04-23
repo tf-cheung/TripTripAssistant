@@ -48,7 +48,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
     @NonNull
     @Override
     public MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.trip_item, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.explore_card, parent, false);
         return new MyHolder(view);
     }
 
@@ -57,6 +57,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         final String uid = modelTrips.get(position).getId();
         final String title = modelTrips.get(position).getName();
         final String startDate = modelTrips.get(position).getDate();
+        final String address = modelTrips.get(position).getAddress();
 
 //        String nameh = modelPosts.get(position).getUname();
 //        final String ptime = modelPosts.get(position).getPtime();
@@ -69,6 +70,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
 //        holder.name.setText(nameh);
         holder.title.setText(title);
         holder.startDate.setText(startDate);
+        holder.address.setText(address);
 
 //        holder.description.setText(descri);
 //        holder.time.setText(timedate);
@@ -167,7 +169,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
 
     class MyHolder extends RecyclerView.ViewHolder {
         ImageView picture, image;
-        TextView name, startDate, time, title, description, like, comments;
+        TextView name, startDate,address, time, title, description, like, comments;
         ImageButton more;
         Button likebtn, comment;
         LinearLayout profile;
@@ -176,6 +178,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
             super(itemView);
             startDate = itemView.findViewById(R.id.start_date);
             title = itemView.findViewById(R.id.trip_name_text_view);
+            address = itemView.findViewById(R.id.address);
 
 //            picture = itemView.findViewById(R.id.picturetv);
 //            image = itemView.findViewById(R.id.pimagetv);
