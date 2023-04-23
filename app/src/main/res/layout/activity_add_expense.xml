@@ -52,7 +52,7 @@
         <ImageView
             android:layout_width="42dp"
             android:layout_height="42dp"
-            android:background="@drawable/edit_border"
+            android:background="@android:color/transparent"
             android:contentDescription="@string/description_icon"
             android:src="@drawable/baseline_edit_note_24"
             app:tint="@color/secondary" />
@@ -77,7 +77,7 @@
         <ImageView
             android:layout_width="42dp"
             android:layout_height="42dp"
-            android:background="@drawable/edit_border"
+            android:background="@android:color/transparent"
             android:contentDescription="@string/dollar_icon"
             android:src="@drawable/baseline_attach_money_24"
             app:tint="@color/secondary" />

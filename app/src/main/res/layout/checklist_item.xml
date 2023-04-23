@@ -25,7 +25,7 @@
             android:id="@+id/checkBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:buttonTint="@color/colorPrimary"
+            android:buttonTint="@color/green"
             android:padding="16dp"
             android:textSize="18sp" />
 

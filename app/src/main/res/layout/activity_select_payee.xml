@@ -38,7 +38,7 @@
             android:layout_width="42dp"
             android:layout_height="wrap_content"
             android:layout_weight="0"
-            android:backgroundTint="@color/green"
+            android:backgroundTint="@color/wedgewood"
             android:text="@string/tick" />
 
     </LinearLayout>
@@ -91,13 +91,13 @@
         android:id="@+id/equalRV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="6dp" />
+        android:paddingHorizontal="12dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/unequalRV"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="6dp"
+        android:paddingHorizontal="12dp"
         android:visibility="gone" />
 
 </LinearLayout>
