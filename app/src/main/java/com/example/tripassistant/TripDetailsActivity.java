@@ -149,6 +149,13 @@ public class TripDetailsActivity extends AppCompatActivity implements OnMapReady
         loadStopPoints();
         loadMembers();
 
+        ImageButton shareButton = findViewById(R.id.share_button);
+        shareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shareTripDetails();
+            }
+        });
 
     }
         @SuppressLint("ClickableViewAccessibility")
@@ -373,5 +380,66 @@ public class TripDetailsActivity extends AppCompatActivity implements OnMapReady
     }
 
 
+    private void shareTripDetails() {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("trips");
+
+        // Replace "trip_id_1" with the actual trip ID you want to share.
+        DatabaseReference tripReference = databaseReference.child(tripId);
+
+        tripReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String tripName = dataSnapshot.child("tripName").getValue(String.class);
+                String tripDate = dataSnapshot.child("startDate").getValue(String.class);
+                StringBuilder membersBuilder = new StringBuilder();
+                for (User user: userList){
+                    membersBuilder.append("\n").append(user.getUsername())
+                            .append(", ");
+                }
+                String members = membersBuilder.toString().replaceAll(", $", "");
+
+
+
+                StringBuilder stopPointsBuilder = new StringBuilder();
+                stopPointsBuilder.append("Trip Details:")
+                        .append("\nTrip Name: ").append(tripName)
+                        .append("\nStart Date: ").append(tripDate)
+                        .append("\nMembers: ").append(members)
+                        .append("\n==============")
+                        .append("\nRoute: \n");
+
+                for (DataSnapshot stopPointSnapshot : dataSnapshot.child("stopPoints").getChildren()) {
+                    String address = stopPointSnapshot.child("address").getValue(String.class);
+                    String date = stopPointSnapshot.child("date").getValue(String.class);
+                    Double latitude = stopPointSnapshot.child("latitude").getValue(Double.class);
+                    Double longitude = stopPointSnapshot.child("longitude").getValue(Double.class);
+                    String name = stopPointSnapshot.child("name").getValue(String.class);
+                    String timeRange = stopPointSnapshot.child("timeRange").getValue(String.class);
+
+                    stopPointsBuilder.append("Name: ").append(name)
+                            .append("\nAddress: ").append(address)
+                            .append("\nDate: ").append(date)
+                            .append("\nTime Range: ").append(timeRange)
+                            .append("\nLatitude: ").append(latitude)
+                            .append("\nLongitude: ").append(longitude)
+                            .append("\n\n");
+                }
+
+                // Create and launch the share intent.
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Trip Details");
+                shareIntent.putExtra(Intent.EXTRA_TEXT, stopPointsBuilder.toString());
+                startActivity(Intent.createChooser(shareIntent, "Share trip details via"));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle the error.
+                Log.e("DisplayTripActivity", "Error fetching trip details: ", databaseError.toException());
+                Toast.makeText(TripDetailsActivity.this, "Error fetching trip details. Please try again later.", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
 }

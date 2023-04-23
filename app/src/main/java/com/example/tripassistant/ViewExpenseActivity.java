@@ -50,5 +50,6 @@ public class ViewExpenseActivity extends AppCompatActivity {
 
         ImageButton backBtn = findViewById(R.id.back_button);
         backBtn.setOnClickListener(view -> onBackPressed());
+
     }
 }

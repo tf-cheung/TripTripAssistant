@@ -87,8 +87,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_logout_black"
                 android:contentDescription="@string/signout_button_description"
-                android:scaleType="fitCenter"
-                android:padding="16dp"
+                android:padding="8dp"
                 android:background="?android:attr/selectableItemBackground" />
         </LinearLayout>
     </LinearLayout>

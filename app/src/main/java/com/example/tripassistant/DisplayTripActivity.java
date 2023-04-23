@@ -172,6 +172,13 @@ public class DisplayTripActivity extends AppCompatActivity {
                             Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_CODE);
         }
 
+
+
+
+
+
+
+
     }
 
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
@@ -235,6 +242,11 @@ public class DisplayTripActivity extends AppCompatActivity {
         Intent intent = new Intent(DisplayTripActivity.this, LoginActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        // Do nothing, effectively disabling the back button.
     }
 
 }
