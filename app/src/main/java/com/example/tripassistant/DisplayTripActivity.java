@@ -37,6 +37,7 @@ import com.example.tripassistant.models.User;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskCompletionSource;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -66,7 +67,7 @@ public class DisplayTripActivity extends AppCompatActivity {
     private final int PERMISSION_CODE = 1;
     private Dialog progressDialog;
     private String username, userEmail;
-    private String currentUserId="4YL3Y5DmGAWZ3YDMjZMieBIjWZ13";
+    private String currentUserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,13 +95,12 @@ public class DisplayTripActivity extends AppCompatActivity {
 
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
         ImageButton menuButton = findViewById(R.id.menu_button);
-        Button epButton = findViewById(R.id.explore_button);
+        FloatingActionButton epButton = findViewById(R.id.explore_button);
 
         menuButton.setOnClickListener(view -> drawerLayout.openDrawer(GravityCompat.START));
         epButton.setOnClickListener(view -> {
             Intent intent = new Intent(DisplayTripActivity.this, ExploreActivity.class);
             startActivity(intent);
-            finish();
         });
 
 
@@ -141,8 +141,6 @@ public class DisplayTripActivity extends AppCompatActivity {
                             Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_CODE);
         }
 
-
-
     }
 
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
@@ -156,97 +154,82 @@ public class DisplayTripActivity extends AppCompatActivity {
             }
         }
     }
-
     private void loadUserTrips() {
-
-        mDatabase.child("trips").addValueEventListener(new ValueEventListener() {
+        usersReference = FirebaseDatabase.getInstance().getReference("users");
+        Query query = usersReference.orderByChild("email").equalTo(userEmail);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                tripsList.clear();
-                for (DataSnapshot tripSnapshot : dataSnapshot.getChildren()) {
-                    String tripsId = tripSnapshot.getKey();
-                    String tripsName = tripSnapshot.child("tripName").getValue(String.class);
-                    String startDate = tripSnapshot.child("startDate").getValue(String.class);
-                    GenericTypeIndicator<List<String>> genericTypeIndicator = new GenericTypeIndicator<List<String>>() {};
-                    List<String> members = tripSnapshot.child("members").getValue(genericTypeIndicator);
-//                    Trip trip = tripSnapshot.getValue(Trip.class);
-                    Trip trip = new Trip(tripsId,tripsName,members,startDate);
-
-                    if (trip != null && trip.getMembers().contains(currentUserId)) {
-                        tripsList.add(trip);
-                        Log.d("tripid",trip.getTripId());
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                        currentUserId = userSnapshot.getKey();
+                        break;
                     }
-                }
-
-                DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
-
-                tripsList = tripsList.stream()
-                        .sorted(Comparator.comparing(trip -> LocalDate.parse(trip.getStartDate(), dateFormatter)))
-                        .collect(Collectors.toList());
-                tripAdapter.setTripsList(tripsList);
-                tripAdapter.notifyDataSetChanged();
-
-                usersReference = FirebaseDatabase.getInstance().getReference("users");
-                Query query = usersReference.orderByChild("email").equalTo(userEmail);
-                query.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.exists()) {
-                            for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-                                currentUserId = userSnapshot.getKey();
-                                break;
+                    // 用户信息处理
+                    usersReference.child(currentUserId).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (dataSnapshot.exists()) {
+                                username = dataSnapshot.child("username").getValue(String.class);
+                                String email = dataSnapshot.child("email").getValue(String.class);
+                                TextView navUsername = findViewById(R.id.nav_username);
+                                TextView navEmail = findViewById(R.id.nav_email);
+                                navUsername.setText(getResources().getString(R.string.hello, username));
+                                navUsername.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
+                                tripAdapter.setUsername(username);
+                                navEmail.setText(email);
                             }
-                            usersReference.child(currentUserId).addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    if (dataSnapshot.exists()) {
-                                        username = dataSnapshot.child("username").getValue(String.class);
-                                        String email = dataSnapshot.child("email").getValue(String.class);
-                                        TextView navUsername = findViewById(R.id.nav_username);
-                                        TextView navEmail = findViewById(R.id.nav_email);
-                                        navUsername.setText(getResources().getString(R.string.hello, username));
-                                        navUsername.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
-                                        tripAdapter.setUsername(username);
-                                        navEmail.setText(email);
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
-                                }
-                            });
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                    }
-                });
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                        }
+                    });
 
+                    // 获取用户相关的trips
+                    mDatabase.child("trips").addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            tripsList.clear();
+                            for (DataSnapshot tripSnapshot : dataSnapshot.getChildren()) {
+                                String tripsId = tripSnapshot.getKey();
+                                String tripsName = tripSnapshot.child("tripName").getValue(String.class);
+                                String startDate = tripSnapshot.child("startDate").getValue(String.class);
+                                GenericTypeIndicator<List<String>> genericTypeIndicator = new GenericTypeIndicator<List<String>>() {};
+                                List<String> members = tripSnapshot.child("members").getValue(genericTypeIndicator);
+                                Trip trip = new Trip(tripsId,tripsName,members,startDate);
 
+                                if (trip != null && trip.getMembers().contains(currentUserId)) {
+                                    tripsList.add(trip);
+                                    Log.d("tripid",trip.getTripId());
+                                }
+                            }
 
+                            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
+                            tripsList = tripsList.stream()
+                                    .sorted(Comparator.comparing(trip -> LocalDate.parse(trip.getStartDate(), dateFormatter)))
+                                    .collect(Collectors.toList());
+                            tripAdapter.setTripsList(tripsList);
+                            tripAdapter.notifyDataSetChanged();
 
+                            progressDialog.dismiss(); // 数据加载完成后关闭Dialog
+                        }
 
-
-
-
-
-
-
-
-
-
-                progressDialog.dismiss(); // 数据加载完成后关闭Dialog
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                            Log.e("DisplayTripActivity", "Error loading trips: " + databaseError.getMessage());
+                        }
+                    });
+                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Log.e("DisplayTripActivity", "Error loading trips: " + databaseError.getMessage());
             }
         });
     }
+
     private void signOut() {
         mAuth.signOut();
         // Clear the SharedPreferences data
@@ -262,6 +245,13 @@ public class DisplayTripActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         // Do nothing, effectively disabling the back button.
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
     }
 
 

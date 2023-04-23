@@ -57,9 +57,9 @@
             android:background="?android:attr/selectableItemBackground"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_share"
-            app:layout_constraintEnd_toStartOf="@id/expense_button"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/stop_points_recycler_view"
             app:tint="@color/wedgewood" />
 
         <ImageButton
