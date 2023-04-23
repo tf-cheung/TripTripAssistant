@@ -13,6 +13,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,7 +60,8 @@ public class ExpenseActivity extends AppCompatActivity {
         instructionTV = findViewById(R.id.instruction_text_view);
         historyBtn = findViewById(R.id.history_button);
         balancesBtn = findViewById(R.id.balances_button);
-        FloatingActionButton addExpenseFAB = findViewById(R.id.addExpenseFAB);
+        ImageButton addExpenseFAB = findViewById(R.id.addExpenseFAB);
+
         expenseRV = findViewById(R.id.expense_recycler_view);
         balancesRV = findViewById(R.id.balances_recycler_view);
         progressBar = findViewById(R.id.progress_bar);
@@ -204,8 +207,10 @@ public class ExpenseActivity extends AppCompatActivity {
         }
 
         List<Transaction> transactions = new ArrayList<>();
-        for (String positivePerson : positiveBalances) {
-            for (String negativePerson : negativeBalances) {
+        List<String> tempPositive = new ArrayList<>(positiveBalances);
+        List<String> tempNegative = new ArrayList<>(negativeBalances);
+        for (String positivePerson : tempPositive) {
+            for (String negativePerson : tempNegative) {
                 float amount = Math.min(balances.get(positivePerson), -balances.get(negativePerson));
                 if (amount > 0.001) {
                     transactions.add(new Transaction(negativePerson, positivePerson, amount));

@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white">
+    android:background="@drawable/background">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -30,15 +29,14 @@
     </RelativeLayout>
 
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="16dp"
+        android:weightSum="1"
         app:layout_anchor="@+id/relativeLayout"
-        app:layout_anchorGravity="center"
-        android:weightSum="1">
+        app:layout_anchorGravity="center">
 
         <EditText
             android:id="@+id/signup_email"
@@ -48,9 +46,7 @@
             android:hint="@string/email"
             android:inputType="textEmailAddress"
             android:minHeight="48dp"
-            android:textColor="@color/black"
-            android:textColorHint="@color/light_gray"
-            android:textStyle="bold" />
+            android:textColor="@color/secondary" />
 
         <EditText
             android:id="@+id/signup_username"
@@ -60,9 +56,7 @@
             android:hint="@string/username"
             android:inputType="text"
             android:minHeight="48dp"
-            android:textColor="@color/black"
-            android:textColorHint="@color/light_gray"
-            android:textStyle="bold" />
+            android:textColor="@color/secondary" />
 
         <EditText
             android:id="@+id/signup_password"
@@ -72,9 +66,7 @@
             android:hint="@string/password"
             android:inputType="textPassword"
             android:minHeight="48dp"
-            android:textColor="@color/black"
-            android:textColorHint="@color/light_gray"
-            android:textStyle="bold"
+            android:textColor="@color/secondary"
             app:layout_constraintBottom_toTopOf="@id/signup_confirm_password" />
 
         <FrameLayout
@@ -104,47 +96,44 @@
             android:hint="@string/confirm_password"
             android:inputType="textPassword"
             android:minHeight="48dp"
-            android:textColor="@color/black"
-            android:textColorHint="@color/light_gray"
-            android:textStyle="bold"/>
+            android:textColor="@color/secondary" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
+            android:layout_height="0dp"
             android:layout_gravity="bottom"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/signup_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:background="@color/colorPrimary"
+                android:backgroundTint="@color/quantum_grey200"
                 android:text="@string/sign_up"
-                android:textColor="@color/white"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/login_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/already_have_an_account_login"
-                android:textColor="@color/black"
-                android:textStyle="bold"
-                android:textSize="14sp" />
+                android:textColor="@color/secondary" />
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/login_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/already_have_an_account_login"
+            android:textColor="@color/secondary"
+            android:textSize="14sp" />
+
         <ImageButton
             android:id="@+id/back_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="48sp"
+            android:layout_height="48sp"
             android:layout_gravity="bottom|start"
             android:background="?android:attr/selectableItemBackground"
+            android:contentDescription="@string/back_button_description"
             android:src="@drawable/left"
-            app:tint="@color/black"
-            android:contentDescription="@string/back_button_description" />
+            app:tint="@color/primary" />
 
-            </LinearLayout>
+    </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

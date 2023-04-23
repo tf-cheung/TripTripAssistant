@@ -37,7 +37,6 @@ import com.example.tripassistant.models.User;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskCompletionSource;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -95,12 +94,13 @@ public class DisplayTripActivity extends AppCompatActivity {
 
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
         ImageButton menuButton = findViewById(R.id.menu_button);
-        FloatingActionButton epButton = findViewById(R.id.explore_button);
+        Button epButton = findViewById(R.id.explore_button);
 
         menuButton.setOnClickListener(view -> drawerLayout.openDrawer(GravityCompat.START));
         epButton.setOnClickListener(view -> {
             Intent intent = new Intent(DisplayTripActivity.this, ExploreActivity.class);
             startActivity(intent);
+            finish();
         });
 
 
@@ -223,6 +223,21 @@ public class DisplayTripActivity extends AppCompatActivity {
                     public void onCancelled(@NonNull DatabaseError databaseError) {
                     }
                 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 progressDialog.dismiss(); // 数据加载完成后关闭Dialog
             }
 
@@ -248,11 +263,6 @@ public class DisplayTripActivity extends AppCompatActivity {
     public void onBackPressed() {
         // Do nothing, effectively disabling the back button.
     }
-    protected void onDestroy() {
-        super.onDestroy();
-        if (progressDialog != null && progressDialog.isShowing()) {
-            progressDialog.dismiss();
-        }
-    }
+
 
 }
