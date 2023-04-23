@@ -53,6 +53,8 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
         } else {
             holder.tripNameTextView.setTextColor(Color.parseColor("#5381a5"));
             holder.starDateTextView.setTextColor(Color.parseColor("#5381a5"));
+            holder.tripCardView.setBackgroundColor(Color.parseColor("#FFFFFF")); // Set the background color to white
+
         }
 
         holder.itemView.setOnClickListener(v -> {
