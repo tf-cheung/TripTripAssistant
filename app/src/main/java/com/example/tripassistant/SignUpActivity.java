@@ -200,7 +200,11 @@ public class SignUpActivity extends AppCompatActivity {
                             if (currentUser != null) {
                                 String userId = currentUser.getUid();
                                 saveUserToDatabase(userId, email, username);
-                                startActivity(new Intent(SignUpActivity.this, DisplayTripActivity.class));
+
+                                Intent intent = new Intent(SignUpActivity.this, DisplayTripActivity.class);
+                                intent.putExtra("userEmail",email);
+                                intent.putExtra("username",username);
+                                startActivity(intent);
                                 finish();
                             } else {
                                 Toast.makeText(SignUpActivity.this, "Registration succeeded, but failed to retrieve user information.",

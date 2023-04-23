@@ -39,6 +39,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -53,6 +54,7 @@ public class AddTripActivity extends AppCompatActivity {
 
     String email, uid, dp;
     private FirebaseAuth mAuth;
+    private HashSet<String> members;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +71,7 @@ public class AddTripActivity extends AppCompatActivity {
             return;
         }
 
+        members = new HashSet<>();
         DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
 
         Query query = usersRef.orderByChild("email").equalTo(currentUser.getEmail());
@@ -154,8 +157,14 @@ public class AddTripActivity extends AppCompatActivity {
 
         memberInput.setOnItemClickListener((parent, view, position, id) -> {
             String memberName = parent.getItemAtPosition(position).toString();
-            addMemberChip(memberName);
-            memberInput.setText("");
+            if(members.contains(memberName)){
+                memberInput.setText("");
+            }else {
+                members.add(memberName);
+                addMemberChip(memberName);
+                memberInput.setText("");
+            }
+
         });
 
 

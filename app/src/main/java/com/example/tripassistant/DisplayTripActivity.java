@@ -61,12 +61,11 @@ public class DisplayTripActivity extends AppCompatActivity {
     private List<Trip> tripsList;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
+    private DatabaseReference usersReference;
     private final int PERMISSION_CODE = 1;
     private Dialog progressDialog;
-    private String username;
-
-
-    private String currentUserId;
+    private String username, userEmail;
+    private String currentUserId="4YL3Y5DmGAWZ3YDMjZMieBIjWZ13";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,7 +83,7 @@ public class DisplayTripActivity extends AppCompatActivity {
             return;
         }
 
-        String userEmail = currentUser.getEmail();
+        userEmail = currentUser.getEmail();
 
         progressDialog = new Dialog(this);
         progressDialog.setContentView(R.layout.progress_dialog);
@@ -96,43 +95,6 @@ public class DisplayTripActivity extends AppCompatActivity {
         ImageButton menuButton = findViewById(R.id.menu_button);
 
         menuButton.setOnClickListener(view -> drawerLayout.openDrawer(GravityCompat.START));
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users");
-
-        Query query = databaseReference.orderByChild("email").equalTo(userEmail);
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
-                        currentUserId = userSnapshot.getKey();
-                        break;
-                    }
-                    databaseReference.child(currentUserId).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            if (dataSnapshot.exists()) {
-                                username = dataSnapshot.child("username").getValue(String.class);
-                                String email = dataSnapshot.child("email").getValue(String.class);
-                                TextView navUsername = findViewById(R.id.nav_username);
-                                TextView navEmail = findViewById(R.id.nav_email);
-                                navUsername.setText(getResources().getString(R.string.hello, username));
-                                navUsername.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
-                                tripAdapter.setUsername(username);
-                                navEmail.setText(email);
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-                        }
-                    });
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
 
 
         ImageView signOutButton = findViewById(R.id.signout_button);
@@ -171,11 +133,6 @@ public class DisplayTripActivity extends AppCompatActivity {
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
                             Manifest.permission.ACCESS_COARSE_LOCATION}, PERMISSION_CODE);
         }
-
-
-
-
-
 
 
 
@@ -222,8 +179,59 @@ public class DisplayTripActivity extends AppCompatActivity {
                         .collect(Collectors.toList());
                 tripAdapter.setTripsList(tripsList);
                 tripAdapter.notifyDataSetChanged();
-                progressDialog.dismiss(); // 数据加载完成后关闭Dialog
 
+                usersReference = FirebaseDatabase.getInstance().getReference("users");
+                Query query = usersReference.orderByChild("email").equalTo(userEmail);
+                query.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                                currentUserId = userSnapshot.getKey();
+                                break;
+                            }
+                            usersReference.child(currentUserId).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    if (dataSnapshot.exists()) {
+                                        username = dataSnapshot.child("username").getValue(String.class);
+                                        String email = dataSnapshot.child("email").getValue(String.class);
+                                        TextView navUsername = findViewById(R.id.nav_username);
+                                        TextView navEmail = findViewById(R.id.nav_email);
+                                        navUsername.setText(getResources().getString(R.string.hello, username));
+                                        navUsername.setTextSize(TypedValue.COMPLEX_UNIT_SP, 24);
+                                        tripAdapter.setUsername(username);
+                                        navEmail.setText(email);
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+                                }
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
+                });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                progressDialog.dismiss(); // 数据加载完成后关闭Dialog
             }
 
             @Override
