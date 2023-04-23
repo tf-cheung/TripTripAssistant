@@ -36,7 +36,6 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     private final List<Transaction> transactions;
     private final String tripId;
     private String tripName;
-    private Transaction transaction;
 
     public TransactionAdapter(Context context, List<Transaction> transactions, String tripId, String tripName) {
         this.context = context;
@@ -55,14 +54,14 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        transaction = transactions.get(position);
+        Transaction transaction = transactions.get(position);
         holder.payerTV.setText(context.getResources().getString(R.string.to_someone, transaction.getPayer()));
         holder.amountTV.setText(context.getResources().getString(R.string.us_money, df.format(transaction.getAmount())));
         holder.payeeTV.setText(context.getResources().getString(R.string.payer_owes, transaction.getPayee()));
 
-        holder.remindBtn.setOnClickListener(view -> sendReminder());
+        holder.remindBtn.setOnClickListener(view -> sendReminder(transaction));
 
-        holder.settleUpBtn.setOnClickListener(view -> settleUp(position));
+        holder.settleUpBtn.setOnClickListener(view -> settleUp(transaction));
     }
 
     @Override
@@ -88,7 +87,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         this.tripName = tripName;
     }
 
-    private void sendReminder() {
+    private void sendReminder(Transaction transaction) {
         DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
         Query query = usersRef.orderByChild("username").equalTo(transaction.getPayee());
 
@@ -126,7 +125,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         });
     }
 
-    private void settleUp(int position) {
+    private void settleUp(Transaction transaction) {
         Map<String, Float> payees = new HashMap<>();
         payees.put(transaction.getPayer(), transaction.getAmount());
         Expense expense = new Expense(transaction.getPayee(), "Settle up", transaction.getAmount(), payees, new Date());
@@ -140,9 +139,6 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
                         Toast.makeText(context, "Failed to settle up balance", Toast.LENGTH_SHORT).show();
                     }
                 });
-
-        transactions.remove(position);
-        notifyItemRemoved(position);
     }
 }
 
