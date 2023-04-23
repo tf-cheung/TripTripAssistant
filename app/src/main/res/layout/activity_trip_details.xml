@@ -72,8 +72,7 @@
             android:scaleType="fitCenter"
             android:src="@drawable/ic_expense_activity"
             app:layout_constraintEnd_toStartOf="@id/add_stop_point_button"
-            app:layout_constraintStart_toEndOf="@id/share_button"
-            app:layout_constraintBottom_toBottomOf="parent"
+app:layout_constraintStart_toStartOf="parent"            app:layout_constraintBottom_toBottomOf="parent"
             app:tint="@color/wedgewood" />
 
         <ImageButton
