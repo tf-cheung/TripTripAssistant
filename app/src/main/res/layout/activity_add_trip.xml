@@ -50,7 +50,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
-        android:text="@string/member"
+        android:text="Member (username)"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/trip_name_input_layout" />
@@ -91,7 +91,7 @@
             android:hint="Enter member name"
             android:textColorHint="#CDCBCB"
             android:selectAllOnFocus="true"
-            android:background="@android:color/transparent"
+            android:background="@android:color/white"
             android:inputType="text" />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -139,20 +139,19 @@
         android:layout_marginTop="55dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:backgroundTint="@color/green"
-        android:text="@string/create_trip"
+        android:text="Create Trip"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/start_date_label" />
 
-    <Button
+    <TextView
         android:id="@+id/cancel_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="@string/cancel"
-        android:textColor="@color/green"
-        android:backgroundTint="@color/white"
+        android:text="Cancel"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/create_trip_button" />

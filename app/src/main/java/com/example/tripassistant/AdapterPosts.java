@@ -17,6 +17,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.tripassistant.models.StopPoint;
 import com.example.tripassistant.models.Trip;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -30,10 +31,12 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
 
     Context context;
     String myuid;
+    List<StopPoint> modelTrips;
+
     private DatabaseReference liekeref, tripref;
     boolean mprocesslike = false;
 
-    public AdapterPosts(Context context, List<Trip> modelTrips) {
+    public AdapterPosts(Context context, List<StopPoint> modelTrips) {
         this.context = context;
         this.modelTrips = modelTrips;
         myuid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -41,33 +44,33 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         tripref = FirebaseDatabase.getInstance().getReference().child("trips");
     }
 
-    List<Trip> modelTrips;
 
     @NonNull
     @Override
     public MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.row_posts, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.explore_card, parent, false);
         return new MyHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull final MyHolder holder, @SuppressLint("RecyclerView") final int position) {
-        final String uid = modelTrips.get(position).getTripId();
-        final String titlee = modelTrips.get(position).getTripName();
-        final String startDate = modelTrips.get(position).getStartDate();
-        final List<String> members = modelTrips.get(position).getMembers();
-        
+        final String uid = modelTrips.get(position).getId();
+        final String title = modelTrips.get(position).getName();
+        final String startDate = modelTrips.get(position).getDate();
+        final String address = modelTrips.get(position).getAddress();
+
 //        String nameh = modelPosts.get(position).getUname();
 //        final String ptime = modelPosts.get(position).getPtime();
 //        String plike = modelPosts.get(position).getPlike();
 //        String comm = modelPosts.get(position).getPcomments();
 
-        Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
+//        Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
 //        calendar.setTimeInMillis(Long.parseLong(ptime));
-        String timedate = DateFormat.format("dd/MM/yyyy hh:mm aa", calendar).toString();
+//        String timedate = DateFormat.format("dd/MM/yyyy hh:mm aa", calendar).toString();
 //        holder.name.setText(nameh);
-        holder.title.setText(titlee);
+        holder.title.setText(title);
         holder.startDate.setText(startDate);
+        holder.address.setText(address);
 
 //        holder.description.setText(descri);
 //        holder.time.setText(timedate);
@@ -122,20 +125,20 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
 //                });
 //            }
 //        });
-        holder.more.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, TripDetailsActivity.class);
-            }
-        });
-        holder.comment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, TripDetailsActivity.class);
-//                intent.putExtra("pid", ptime);
-                context.startActivity(intent);
-            }
-        });
+//        holder.more.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(context, TripDetailsActivity.class);
+//            }
+//        });
+//        holder.comment.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(context, TripDetailsActivity.class);
+////                intent.putExtra("pid", ptime);
+//                context.startActivity(intent);
+//            }
+//        });
     }
 
 
@@ -166,20 +169,23 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
 
     class MyHolder extends RecyclerView.ViewHolder {
         ImageView picture, image;
-        TextView name, startDate, time, title, description, like, comments;
+        TextView name, startDate,address, time, title, description, like, comments;
         ImageButton more;
         Button likebtn, comment;
         LinearLayout profile;
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);
-            startDate = itemView.findViewById(R.id.startdatetv);
-            picture = itemView.findViewById(R.id.picturetv);
-            image = itemView.findViewById(R.id.pimagetv);
-            name = itemView.findViewById(R.id.unametv);
-            time = itemView.findViewById(R.id.utimetv);
-            more = itemView.findViewById(R.id.morebtn);
-            title = itemView.findViewById(R.id.ptitletv);
+            startDate = itemView.findViewById(R.id.start_date);
+            title = itemView.findViewById(R.id.trip_name_text_view);
+            address = itemView.findViewById(R.id.address);
+
+//            picture = itemView.findViewById(R.id.picturetv);
+//            image = itemView.findViewById(R.id.pimagetv);
+//            name = itemView.findViewById(R.id.unametv);
+//            time = itemView.findViewById(R.id.utimetv);
+//            more = itemView.findViewById(R.id.morebtn);
+//            title = itemView.findViewById(R.id.ptitletv);
 //            description = itemView.findViewById(R.id.descript);
 //            like = itemView.findViewById(R.id.plikeb);
 //            comments = itemView.findViewById(R.id.pcommentco);
