@@ -101,7 +101,7 @@ public class DisplayTripActivity extends AppCompatActivity {
         epButton.setOnClickListener(view -> {
             Intent intent = new Intent(DisplayTripActivity.this, ExploreActivity.class);
             startActivity(intent);
-            finish();
+
         });
 
 
