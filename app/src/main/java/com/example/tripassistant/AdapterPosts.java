@@ -91,9 +91,10 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
                                 likeRef.child(myuid).setValue(true);
                                 mProcessLike = false;
                             }
+                            updateLikedByState(holder,tripId,spId);
+                            setLikes(holder);
+
                         }
-                        updateLikedByState(holder,tripId,spId);
-                        setLikes(holder);
 
                     }
 
@@ -133,7 +134,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
 
     class MyHolder extends RecyclerView.ViewHolder {
         ImageView picture, image;
-        TextView name, startDate, address, time, title, description, like, comments,likedBy;
+        TextView name, startDate, address, time, title, description, like, comments,likedBy,likedByText;
         Button likebtn, comment;
         LinearLayout profile;
 
@@ -145,6 +146,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
             like = itemView.findViewById(R.id.like_count_text_view);
             likebtn = itemView.findViewById(R.id.like_button);
             likedBy = itemView.findViewById(R.id.likedByUsername_text_view);
+            likedByText = itemView.findViewById(R.id.likedBy_text_view);
 
 
             likebtn.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_like, 0, 0, 0); // Set the initial image for the like button
@@ -211,7 +213,6 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         });
     }
 
-
     private void updateLikedByState(final MyHolder holder, String tripId, String spId) {
         tripsRef.child(tripId).child("stopPoints").child(spId).child("likedBy").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -220,26 +221,28 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
                 int likedByCount = (int) dataSnapshot.getChildrenCount();
                 AtomicInteger currentCount = new AtomicInteger(0);
 
-                for (DataSnapshot likedBySnapshot : dataSnapshot.getChildren()) {
-                    String likedById = likedBySnapshot.getKey().toString();
+                if (likedByCount > 0) {
+                    holder.likedByText.setText("Liked By ");
+                } else {
+                    holder.likedByText.setText("");
+                    holder.likedBy.setText("");
+                }
 
+                for (DataSnapshot likedBySnapshot : dataSnapshot.getChildren()) {
+                    String likedById = likedBySnapshot.getKey();
                     userRef.child(likedById).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             String username = dataSnapshot.child("username").getValue(String.class);
-
                             likedByUsernames.append(username);
                             currentCount.incrementAndGet();
-
                             if (currentCount.get() < likedByCount) {
                                 likedByUsernames.append(", ");
                             } else {
                                 holder.likedBy.setText(likedByUsernames.toString());
                             }
-
                             Log.d("likedBy", username);
                         }
-
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
                         }
