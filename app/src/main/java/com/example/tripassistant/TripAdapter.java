@@ -33,7 +33,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
     @Override
     public TripViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.trip_item, parent, false);
-        return new TripViewHolder(itemView, trips);
+        return new TripViewHolder(itemView);
     }
 
     @Override
@@ -54,6 +54,19 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
             holder.tripNameTextView.setTextColor(Color.parseColor("#5381a5"));
             holder.starDateTextView.setTextColor(Color.parseColor("#5381a5"));
         }
+
+        holder.itemView.setOnClickListener(v -> {
+            int positionInListener = holder.getAdapterPosition();
+            if (positionInListener != RecyclerView.NO_POSITION) {
+                Trip clickedTrip = trips.get(positionInListener);
+                Intent intent = new Intent(holder.itemView.getContext(), TripDetailsActivity.class);
+                intent.putExtra("tripId", clickedTrip.getTripId());
+                intent.putExtra("tripName", clickedTrip.getTripName());
+                intent.putExtra("startDate", clickedTrip.getStartDate());
+                intent.putExtra("username", username);
+                holder.itemView.getContext().startActivity(intent);
+            }
+        });
     }
 
 
@@ -64,28 +77,13 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
 
     public class TripViewHolder extends RecyclerView.ViewHolder {
         private ConstraintLayout tripCardView;
-        private TextView tripNameTextView,starDateTextView;
-        private List<Trip> trips;
+        private TextView tripNameTextView, starDateTextView;
 
-        public TripViewHolder(@NonNull View itemView, List<Trip> trips) {
+        public TripViewHolder(@NonNull View itemView) {
             super(itemView);
-            this.trips = trips;
             tripCardView = itemView.findViewById(R.id.trip_card_view);
             tripNameTextView = itemView.findViewById(R.id.trip_name_text_view);
             starDateTextView = itemView.findViewById(R.id.start_date);
-
-            itemView.setOnClickListener(v -> {
-                int position = getAdapterPosition();
-                if (position != RecyclerView.NO_POSITION) {
-                    Trip trip = trips.get(position);
-                    Intent intent = new Intent(itemView.getContext(), TripDetailsActivity.class);
-                    intent.putExtra("tripId", trip.getTripId());
-                    intent.putExtra("tripName", trip.getTripName());
-                    intent.putExtra("startDate", trip.getStartDate());
-                    intent.putExtra("username", username);
-                    itemView.getContext().startActivity(intent);
-                }
-            });
         }
     }
     public void setTripsList(List<Trip> newTripsList) {
