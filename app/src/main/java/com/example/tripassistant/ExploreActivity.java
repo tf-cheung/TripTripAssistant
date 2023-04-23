@@ -14,6 +14,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -50,7 +51,13 @@ public class ExploreActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 posts.clear();
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    Trip trip = dataSnapshot1.getValue(Trip.class);
+                    String tripsId = dataSnapshot1.getKey();
+                    String tripsName = dataSnapshot1.child("tripName").getValue(String.class);
+                    String startDate = dataSnapshot1.child("startDate").getValue(String.class);
+                    GenericTypeIndicator<List<String>> genericTypeIndicator = new GenericTypeIndicator<List<String>>() {};
+                    List<String> members = dataSnapshot1.child("members").getValue(genericTypeIndicator);
+//                    Trip trip = tripSnapshot.getValue(Trip.class);
+                    Trip trip = new Trip(tripsId,tripsName,members,startDate);
                     if(trip != null){
                         posts.add(trip);
                     }
