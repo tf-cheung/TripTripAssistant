@@ -9,6 +9,7 @@ import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Display;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,10 +27,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -43,16 +47,48 @@ public class AddTripActivity extends AppCompatActivity {
     private ChipGroup memberChipGroup;
     private EditText tripNameInput;
 
-    private String currentUserId = "KNALPmRX2VNl7lnBYdhq2gAHXBr1";
+    private String currentUserId;
     private TextView startDateText;
     private List<User> users= new ArrayList<>();
 
     String email, uid, dp;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_trip);
+
+        mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser == null) {
+            // If the user is not logged in, redirect them to LoginActivity
+            Intent intent = new Intent(AddTripActivity.this, LoginActivity.class);
+            startActivity(intent);
+            finish();
+            return;
+        }
+
+        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
+
+        Query query = usersRef.orderByChild("email").equalTo(currentUser.getEmail());
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+                        currentUserId = userSnapshot.getKey();
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        });
+
+
 
 
         memberInput = findViewById(R.id.member_input);
@@ -80,7 +116,6 @@ public class AddTripActivity extends AppCompatActivity {
 
 
 
-        DatabaseReference usersRef = FirebaseDatabase.getInstance().getReference("users");
 
         ValueEventListener valueEventListener = new ValueEventListener() {
             @Override
