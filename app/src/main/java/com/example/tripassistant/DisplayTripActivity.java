@@ -17,6 +17,7 @@ import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -93,8 +94,14 @@ public class DisplayTripActivity extends AppCompatActivity {
 
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
         ImageButton menuButton = findViewById(R.id.menu_button);
+        Button epButton = findViewById(R.id.explore_button);
 
         menuButton.setOnClickListener(view -> drawerLayout.openDrawer(GravityCompat.START));
+        epButton.setOnClickListener(view -> {
+            Intent intent = new Intent(DisplayTripActivity.this, ExploreActivity.class);
+            startActivity(intent);
+            finish();
+        });
 
 
         ImageView signOutButton = findViewById(R.id.signout_button);
@@ -256,5 +263,6 @@ public class DisplayTripActivity extends AppCompatActivity {
     public void onBackPressed() {
         // Do nothing, effectively disabling the back button.
     }
+
 
 }

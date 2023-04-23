@@ -17,6 +17,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.tripassistant.models.StopPoint;
 import com.example.tripassistant.models.Trip;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -30,10 +31,12 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
 
     Context context;
     String myuid;
+    List<StopPoint> modelTrips;
+
     private DatabaseReference liekeref, tripref;
     boolean mprocesslike = false;
 
-    public AdapterPosts(Context context, List<Trip> modelTrips) {
+    public AdapterPosts(Context context, List<StopPoint> modelTrips) {
         this.context = context;
         this.modelTrips = modelTrips;
         myuid = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -41,7 +44,6 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
         tripref = FirebaseDatabase.getInstance().getReference().child("trips");
     }
 
-    List<Trip> modelTrips;
 
     @NonNull
     @Override
@@ -52,11 +54,10 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull final MyHolder holder, @SuppressLint("RecyclerView") final int position) {
-        final String uid = modelTrips.get(position).getTripId();
-        final String titlee = modelTrips.get(position).getTripName();
-        final String startDate = modelTrips.get(position).getStartDate();
-        final List<String> members = modelTrips.get(position).getMembers();
-        
+        final String uid = modelTrips.get(position).getId();
+        final String title = modelTrips.get(position).getName();
+        final String startDate = modelTrips.get(position).getDate();
+
 //        String nameh = modelPosts.get(position).getUname();
 //        final String ptime = modelPosts.get(position).getPtime();
 //        String plike = modelPosts.get(position).getPlike();
@@ -66,7 +67,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
 //        calendar.setTimeInMillis(Long.parseLong(ptime));
 //        String timedate = DateFormat.format("dd/MM/yyyy hh:mm aa", calendar).toString();
 //        holder.name.setText(nameh);
-        holder.title.setText(titlee);
+        holder.title.setText(title);
         holder.startDate.setText(startDate);
 
 //        holder.description.setText(descri);

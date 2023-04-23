@@ -1,9 +1,10 @@
 package com.example.tripassistant.models;
 
 public class StopPoint {
-    String id,name,address,date,time,latitude,longitude;
+    String id,name,address,date,time;
+    double latitude,longitude;
 
-    public StopPoint(String id, String name, String address, String date, String time, String latitude, String longitude) {
+    public StopPoint(String id, String name, String address, String date, String time, double latitude, double longitude) {
         this.id = id;
         this.name = name;
         this.address = address;
@@ -53,19 +54,19 @@ public class StopPoint {
         this.time = time;
     }
 
-    public String getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(String latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 
-    public String getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(String longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 }

@@ -288,7 +288,8 @@ public class TripDetailsActivity extends AppCompatActivity implements OnMapReady
         });
     }
 
-    private void loadStopPoints() {mDatabaseReference.child(tripId).child("stopPoints").addValueEventListener(new ValueEventListener() {
+    private void loadStopPoints() {
+        mDatabaseReference.child(tripId).child("stopPoints").addValueEventListener(new ValueEventListener() {
         @Override
         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
             stopPointsList.clear();
