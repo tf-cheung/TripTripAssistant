@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/add_trip_layout"
+    android:background="@drawable/background"
     tools:context=".MainActivity">
 
     <TextView
@@ -36,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="15"
-            android:background="@color/white"
+            android:background="@android:color/transparent"
             android:inputType="textPersonName"
             android:selectAllOnFocus="true"
             android:textSize="16sp" />
@@ -87,6 +88,7 @@
             android:id="@+id/member_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:hint="Enter member name"
             android:textColorHint="#CDCBCB"
             android:selectAllOnFocus="true"
             android:background="@android:color/white"

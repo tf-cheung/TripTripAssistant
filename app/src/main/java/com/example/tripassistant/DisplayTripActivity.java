@@ -4,7 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.Manifest;
 import android.app.Dialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -94,14 +93,8 @@ public class DisplayTripActivity extends AppCompatActivity {
 
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
         ImageButton menuButton = findViewById(R.id.menu_button);
-        Button epButton = findViewById(R.id.explore_button);
 
         menuButton.setOnClickListener(view -> drawerLayout.openDrawer(GravityCompat.START));
-        epButton.setOnClickListener(view -> {
-            Intent intent = new Intent(DisplayTripActivity.this, ExploreActivity.class);
-            startActivity(intent);
-            finish();
-        });
 
 
         ImageView signOutButton = findViewById(R.id.signout_button);
@@ -125,7 +118,7 @@ public class DisplayTripActivity extends AppCompatActivity {
 
         loadUserTrips();
 
-        TextView createButton = findViewById(R.id.create_button);
+        Button createButton = findViewById(R.id.create_button);
         createButton.setOnClickListener(v -> {
             Intent intent = new Intent(DisplayTripActivity.this, AddTripActivity.class);
             startActivity(intent);
@@ -263,6 +256,5 @@ public class DisplayTripActivity extends AppCompatActivity {
     public void onBackPressed() {
         // Do nothing, effectively disabling the back button.
     }
-
 
 }
