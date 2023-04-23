@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tripassistant.models.Trip;
 
+import org.checkerframework.checker.units.qual.C;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -43,8 +45,9 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
         LocalDate today = LocalDate.now();
 
         if (tripDate.isBefore(today)) {
-            holder.tripNameTextView.setTextColor(Color.GRAY);
-            holder.starDateTextView.setTextColor(Color.GRAY);
+            holder.tripNameTextView.setTextColor(Color.parseColor("#808080"));
+            holder.starDateTextView.setTextColor(Color.parseColor("#808080"));
+            holder.itemView.setBackgroundColor(Color.parseColor("#F0F0F0"));
         } else {
             holder.tripNameTextView.setTextColor(Color.parseColor("#5381a5"));
             holder.starDateTextView.setTextColor(Color.parseColor("#5381a5"));
