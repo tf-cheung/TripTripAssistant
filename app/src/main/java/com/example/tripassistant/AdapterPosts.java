@@ -46,7 +46,7 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
     @NonNull
     @Override
     public MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.row_posts, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.trip_item, parent, false);
         return new MyHolder(view);
     }
 
@@ -62,9 +62,9 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
 //        String plike = modelPosts.get(position).getPlike();
 //        String comm = modelPosts.get(position).getPcomments();
 
-        Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
+//        Calendar calendar = Calendar.getInstance(Locale.ENGLISH);
 //        calendar.setTimeInMillis(Long.parseLong(ptime));
-        String timedate = DateFormat.format("dd/MM/yyyy hh:mm aa", calendar).toString();
+//        String timedate = DateFormat.format("dd/MM/yyyy hh:mm aa", calendar).toString();
 //        holder.name.setText(nameh);
         holder.title.setText(titlee);
         holder.startDate.setText(startDate);
@@ -122,20 +122,20 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
 //                });
 //            }
 //        });
-        holder.more.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, TripDetailsActivity.class);
-            }
-        });
-        holder.comment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, TripDetailsActivity.class);
-//                intent.putExtra("pid", ptime);
-                context.startActivity(intent);
-            }
-        });
+//        holder.more.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(context, TripDetailsActivity.class);
+//            }
+//        });
+//        holder.comment.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(context, TripDetailsActivity.class);
+////                intent.putExtra("pid", ptime);
+//                context.startActivity(intent);
+//            }
+//        });
     }
 
 
@@ -173,13 +173,15 @@ public class AdapterPosts extends RecyclerView.Adapter<AdapterPosts.MyHolder> {
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);
-            startDate = itemView.findViewById(R.id.startdatetv);
-            picture = itemView.findViewById(R.id.picturetv);
-            image = itemView.findViewById(R.id.pimagetv);
-            name = itemView.findViewById(R.id.unametv);
-            time = itemView.findViewById(R.id.utimetv);
-            more = itemView.findViewById(R.id.morebtn);
-            title = itemView.findViewById(R.id.ptitletv);
+            startDate = itemView.findViewById(R.id.start_date);
+            title = itemView.findViewById(R.id.trip_name_text_view);
+
+//            picture = itemView.findViewById(R.id.picturetv);
+//            image = itemView.findViewById(R.id.pimagetv);
+//            name = itemView.findViewById(R.id.unametv);
+//            time = itemView.findViewById(R.id.utimetv);
+//            more = itemView.findViewById(R.id.morebtn);
+//            title = itemView.findViewById(R.id.ptitletv);
 //            description = itemView.findViewById(R.id.descript);
 //            like = itemView.findViewById(R.id.plikeb);
 //            comments = itemView.findViewById(R.id.pcommentco);
