@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.widget.Toast;
 
-import com.example.tripassistant.models.ModelPost;
+import com.example.tripassistant.models.Trip;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,7 +24,7 @@ public class ExploreActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
     String myuid;
     RecyclerView recyclerView;
-    List<ModelPost> posts;
+    List<Trip> posts;
     AdapterPosts adapterPosts;
 
     @Override
@@ -50,44 +50,22 @@ public class ExploreActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 posts.clear();
                 for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    ModelPost modelPost = dataSnapshot1.getValue(ModelPost.class);
-                    posts.add(modelPost);
-                    adapterPosts = new AdapterPosts(getApplicationContext(), posts);
-                    recyclerView.setAdapter(adapterPosts);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                Toast.makeText(getApplicationContext(), databaseError.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
-    }
-
-    // Search post code
-    private void searchPosts(final String search) {
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("trips");
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                posts.clear();
-                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                    ModelPost modelPost = dataSnapshot1.getValue(ModelPost.class);
-                    if (modelPost.getTitle().toLowerCase().contains(search.toLowerCase()) ||
-                            modelPost.getDescription().toLowerCase().contains(search.toLowerCase())) {
-                        posts.add(modelPost);
+                    Trip trip = dataSnapshot1.getValue(Trip.class);
+                    if(trip != null){
+                        posts.add(trip);
                     }
                     adapterPosts = new AdapterPosts(getApplicationContext(), posts);
                     recyclerView.setAdapter(adapterPosts);
-
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+
                 Toast.makeText(getApplicationContext(), databaseError.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
     }
+
 }
+
