@@ -67,11 +67,30 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
 
-
-
-
-
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="5dp">
+        <TextView
+            android:id="@+id/likedBy_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Liked by "
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="8dp"
+            android:textSize="14sp" />
+        <TextView
+            android:id="@+id/likedByUsername_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Liked by "
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="8dp"
+            android:textSize="14sp" />
+    </LinearLayout>
+
 
     </LinearLayout>
 
