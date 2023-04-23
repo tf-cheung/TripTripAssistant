@@ -37,6 +37,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/memberRV"
+        android:paddingHorizontal="12dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
