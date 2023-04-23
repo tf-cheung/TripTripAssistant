@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tripassistant.models.Trip;
@@ -47,7 +49,7 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
         if (tripDate.isBefore(today)) {
             holder.tripNameTextView.setTextColor(Color.parseColor("#808080"));
             holder.starDateTextView.setTextColor(Color.parseColor("#808080"));
-            holder.itemView.setBackgroundColor(Color.parseColor("#F0F0F0"));
+            holder.tripCardView.setBackgroundColor(Color.parseColor("#F0F0F0"));
         } else {
             holder.tripNameTextView.setTextColor(Color.parseColor("#5381a5"));
             holder.starDateTextView.setTextColor(Color.parseColor("#5381a5"));
@@ -61,12 +63,14 @@ public class TripAdapter extends RecyclerView.Adapter<TripAdapter.TripViewHolder
     }
 
     public class TripViewHolder extends RecyclerView.ViewHolder {
+        private ConstraintLayout tripCardView;
         private TextView tripNameTextView,starDateTextView;
         private List<Trip> trips;
 
         public TripViewHolder(@NonNull View itemView, List<Trip> trips) {
             super(itemView);
             this.trips = trips;
+            tripCardView = itemView.findViewById(R.id.trip_card_view);
             tripNameTextView = itemView.findViewById(R.id.trip_name_text_view);
             starDateTextView = itemView.findViewById(R.id.start_date);
 
