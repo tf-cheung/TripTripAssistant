@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.tripassistant.models.StopPoint;
@@ -56,6 +58,9 @@ public class ExploreActivity extends AppCompatActivity {
             posts.clear();
 
             for (DataSnapshot tripSnapshot : dataSnapshot.getChildren()) {
+                String tripId = tripSnapshot.getKey();
+                Log.d("AdapterPosts", "Trip ID: " + tripId);
+
                 DataSnapshot stopPointsSnapshot = tripSnapshot.child("stopPoints");
                 for (DataSnapshot dataSnapshot1 : stopPointsSnapshot.getChildren()) {
                     String spId = dataSnapshot1.getKey();
@@ -65,14 +70,12 @@ public class ExploreActivity extends AppCompatActivity {
                     String sptime = dataSnapshot1.child("timeRange").getValue(String.class);
                     double splatitude = dataSnapshot1.child("latitude").getValue(double.class);
                     double splongitude = dataSnapshot1.child("longitude").getValue(double.class);
-                    String plike = dataSnapshot1.child("like").getValue(String.class);
+                    String liked = dataSnapshot1.child("liked").getValue(String.class);
 
                     GenericTypeIndicator<List<String>> genericTypeIndicator = new GenericTypeIndicator<List<String>>() {
                     };
-                    List<String> members = dataSnapshot1.child("members").getValue(genericTypeIndicator);
-//                    Trip trip = tripSnapshot.getValue(Trip.class);
 
-                    StopPoint stopPoint = new StopPoint(spId, spName, spAddress, spDate, sptime, splatitude, splongitude, plike);
+                    StopPoint stopPoint = new StopPoint(tripId, spId, spName, spAddress, spDate, sptime, splatitude, splongitude, liked);
                     if (stopPoint != null) {
                         posts.add(stopPoint);
                     }
