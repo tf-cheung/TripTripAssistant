@@ -43,19 +43,15 @@ git clone https://github.com/tf-cheung/trip-assistant.git
 
 Before running the application, you need to add your own Google API key to the following locations:
 
-In the values.xml file, replace GOOGLE_API_KEY with your actual API key:
+
+In the strings.xml file, replace GOOGLE_API_KEY with your actual API key:
   ```
-  <string name="google_api_key" translatable="false">GOOGLE_API_KEY</string>
+    <string name="google_maps_key" translatable="false">YOUR_KEY</string>
   ```
-  ```
-  <string name="google_crash_reporting_api_key" translatable="false">GOOGLE_API_KEY</string>
+In the AndroidManifest.xml file, replace GOOGLE_API_KEY with your actual API key:
 ```
-In the google-services.json file, replace GOOGLE_API_KEY with your actual API key:
-  ```
-  "api_key": [
-      {
-          "current_key": "GOOGLE_API_KEY"
-      }
-  ]
-  ```
+ <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="YOUR_KEY"/>
+```
 Make sure to replace GOOGLE_API_KEY with your own Google API key to ensure that the application works correctly.
