@@ -124,7 +124,8 @@ public class TripDetailsActivity extends AppCompatActivity implements OnMapReady
         addStopPointButton.setOnClickListener(v -> {
             showAddStopPointDialog();
         });
-        String apiKey = getString(R.string.google_maps_key);
+        String apiKey = BuildConfig.API_KEY;
+        Log.d("apikey",apiKey);
         if (!Places.isInitialized()) {
             Places.initialize(getApplicationContext(), apiKey);
         }
