@@ -41,17 +41,16 @@ git clone https://github.com/tf-cheung/trip-assistant.git
 
 # Important Note
 
-Before running the application, you need to add your own Google API key to the following locations:
+Before running the application, you need to add your own Google API key:
 
+1. Create a new file called `apikey.properties` in the root directory of your Android project (the same level as your build.gradle files).
+2. Open the apikey.properties file and add your API key as a property:
+```
+API_KEY=your_api_key_here
+```
+Replace your_api_key_here with your actual API key.
 
-In the strings.xml file, replace GOOGLE_API_KEY with your actual API key:
-  ```
-    <string name="google_maps_key" translatable="false">YOUR_KEY</string>
-  ```
-In the AndroidManifest.xml file, replace GOOGLE_API_KEY with your actual API key:
-```
- <meta-data
-            android:name="com.google.android.geo.API_KEY"
-            android:value="YOUR_KEY"/>
-```
-Make sure to replace GOOGLE_API_KEY with your own Google API key to ensure that the application works correctly.
+3. Save and close the apikey.properties file.
+4. Rebuild the proejct.
+
+## Make sure to replace GOOGLE_API_KEY with your own Google API key to ensure that the application works correctly.
